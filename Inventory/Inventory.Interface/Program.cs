@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Inventory.Classes;
-using Inventory.DataModel;
+using Inventory.DataModel.Repositories;
 using Inventory.Classes.Enums;
 using Inventory.Interface.FunctionExtensions;
 
@@ -15,7 +15,7 @@ namespace Inventory.Interface
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to your inventory! 'quit' or 'q' to exit");
-            if (Repository.IsTableEmpty())
+            if (OwnerRepository.IsTableEmpty())
                 DbSetup.SetUpDB();
 
             string input = "";
@@ -66,7 +66,7 @@ namespace Inventory.Interface
         {
             int id = -1;
             string input;
-            List<Owner> owners = Repository.GetAllOwners().ToList();
+            List<Owner> owners = OwnerRepository.GetAllOwners().ToList();
             Console.WriteLine(owners.ToString(new object()));
             while (id < 1)
             {
@@ -78,8 +78,8 @@ namespace Inventory.Interface
                 }
             }
 
-            Owner toBeKilled = Repository.GetOwnerById(id);
-            bool success = Repository.DestroyOwner(toBeKilled);
+            Owner toBeKilled = OwnerRepository.GetOwnerById(id);
+            bool success = OwnerRepository.DestroyOwner(toBeKilled);
 
             string msg = success ? "Update successful" : "Update failed";
             Console.WriteLine(msg);
@@ -89,7 +89,7 @@ namespace Inventory.Interface
         {
             int id = -1;
             string input;
-            List<Owner> owners = Repository.GetOwnersByType(type).ToList();
+            List<Owner> owners = OwnerRepository.GetOwnersByType(type).ToList();
             Console.WriteLine(owners.ToString(new object()));
             while (id < 1)
             {
@@ -104,7 +104,7 @@ namespace Inventory.Interface
             Owner owner = null;
             try
             {
-                owner = Repository.GetOwnerById(id);
+                owner = OwnerRepository.GetOwnerById(id);
                 Console.WriteLine($"You selected : {owner.ToString()}");
             }
             catch (Exception e)
@@ -129,7 +129,7 @@ namespace Inventory.Interface
 
             bool success = InsertNewValue(id, input, owner);
 
-            success = Repository.UpdateOwner(owner);
+            success = OwnerRepository.UpdateOwner(owner);
             string msg = success ? "Update successful" : "Update failed";
             Console.WriteLine(msg);
 
@@ -184,18 +184,18 @@ namespace Inventory.Interface
                 Type = type,
             };
 
-            Repository.CreateOwner(new Owner[] { newGuy });
+            OwnerRepository.CreateOwner(new Owner[] { newGuy });
         }
 
         private static void SeeCats()
         {
-            List<Owner> owners = Repository.GetOwnersByType(OwnerTypes.Cat).ToList();
+            List<Owner> owners = OwnerRepository.GetOwnersByType(OwnerTypes.Cat).ToList();
             Console.WriteLine(owners.ToString(new object()));
         }
 
         private static void SeePeople()
         {
-            List<Owner> owners = Repository.GetOwnersByType(OwnerTypes.Human).ToList();
+            List<Owner> owners = OwnerRepository.GetOwnersByType(OwnerTypes.Human).ToList();
             Console.WriteLine(owners.ToString(new object()));
         }
 

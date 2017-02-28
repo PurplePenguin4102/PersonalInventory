@@ -59,9 +59,18 @@
     <Compile Include="Migrations\201702280255215_Split Owner Names.Designer.cs">
       <DependentUpon>201702280255215_Split Owner Names.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702281048156_Adding Stuff.cs" />
+    <Compile Include="Migrations\201702281048156_Adding Stuff.Designer.cs">
+      <DependentUpon>201702281048156_Adding Stuff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702281136219_Added self reference.cs" />
+    <Compile Include="Migrations\201702281136219_Added self reference.Designer.cs">
+      <DependentUpon>201702281136219_Added self reference.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository.cs" />
+    <Compile Include="Repositories\OwnerRepository.cs" />
+    <Compile Include="Repositories\StuffRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -80,7 +89,14 @@
     <EmbeddedResource Include="Migrations\201702280255215_Split Owner Names.resx">
       <DependentUpon>201702280255215_Split Owner Names.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702281048156_Adding Stuff.resx">
+      <DependentUpon>201702281048156_Adding Stuff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702281136219_Added self reference.resx">
+      <DependentUpon>201702281136219_Added self reference.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

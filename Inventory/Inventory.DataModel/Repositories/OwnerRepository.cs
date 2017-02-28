@@ -7,9 +7,9 @@ using Inventory.Classes;
 using Inventory.Classes.Enums;
 using System.Data.Entity;
 
-namespace Inventory.DataModel
+namespace Inventory.DataModel.Repositories
 {
-    public static class Repository
+    public static class OwnerRepository
     {
         public static bool CreateOwner(Owner[] newOwner)
         {

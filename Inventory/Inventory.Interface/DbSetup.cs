@@ -48,7 +48,7 @@ namespace Inventory.Interface
 
             Owner[] owners = new Owner[4] { Joey, Kate, Mozart, Phryne };
 
-            Repository.CreateOwner(owners);
+            OwnerRepository.CreateOwner(owners);
         }
     }
 }
