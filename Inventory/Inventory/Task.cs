@@ -12,8 +12,8 @@ namespace Inventory.Classes
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime DueForCompletion { get; set; }
-        public List<Stuff> StuffRequired { get; set; }
-        public List<Owner> PeopleAssigned { get; set; }
+        public virtual List<Stuff> StuffRequired { get; set; }
+        public virtual List<Owner> PeopleAssigned { get; set; }
         public bool IsComplete { get; set; }
     }
 }

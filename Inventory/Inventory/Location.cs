@@ -10,8 +10,8 @@ namespace Inventory.Classes
     public class Location
     {
         public int Id { get; set; }
-        public string Room { get; set; }
+        public Rooms Room { get; set; }
         public StorageType TypeOfStorage { get; set; }
-        public List<Stuff> StuffStored { get; set; }
+        public virtual List<Stuff> StuffStored { get; set; }
     }
 }
