@@ -17,10 +17,23 @@ namespace Inventory.DataModel.Repositories
             using (var context = new InventoryContext())
             {
                 context.Database.Log = Console.WriteLine;
+                if (stuff.Owner != null)
+                {
+                    context.Owners.Attach(stuff.Owner);
+                    context.Entry(stuff.Owner).State = EntityState.Unchanged;
+                }
                 context.Inventory.Add(stuff);
                 retVal = context.SaveChanges();
             }
             return retVal != 0;
+        }
+
+        public static bool IsTableEmpty()
+        {
+            using (InventoryContext Context = new InventoryContext())
+            {
+                return !Context.Inventory.Any();
+            }
         }
 
         public static bool CreateLotsOfStuff(Stuff[] stuff)
@@ -29,6 +42,14 @@ namespace Inventory.DataModel.Repositories
             using (var context = new InventoryContext())
             {
                 context.Database.Log = Console.WriteLine;
+                foreach (Stuff s in stuff)
+                {
+                    if (s.Owner != null)
+                    {
+                        context.Owners.Attach(s.Owner);
+                        context.Entry(s.Owner).State = EntityState.Unchanged;
+                    }
+                }
                 context.Inventory.AddRange(stuff);
                 retVal = context.SaveChanges();
             }

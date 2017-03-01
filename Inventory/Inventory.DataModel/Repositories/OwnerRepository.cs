@@ -54,7 +54,7 @@ namespace Inventory.DataModel.Repositories
             using (InventoryContext Context = new InventoryContext())
             {
                 Context.Database.Log = Console.WriteLine;
-                FilteredOwner = Context.Owners.Where(owner => owner.FirstName.ToLower() == Name.ToLower());
+                FilteredOwner = Context.Owners.Where(owner => owner.FirstName.ToLower() == Name.ToLower()).ToList();
             }
             return FilteredOwner;
         }
@@ -65,7 +65,7 @@ namespace Inventory.DataModel.Repositories
             using (InventoryContext Context = new InventoryContext())
             {
                 Context.Database.Log = Console.WriteLine;
-                FilteredOwner = Context.Owners.Where(owner => owner.FirstName.ToLower() == Name.ToLower());
+                FilteredOwner = Context.Owners.Where(owner => owner.LastName.ToLower() == Name.ToLower()).ToList();
             }
             return FilteredOwner;
         }
@@ -101,16 +101,15 @@ namespace Inventory.DataModel.Repositories
             }
         }
 
-        public static IEnumerable<Stuff> GetOwnersStuffByType(OwnerTypes type)
+        public static IEnumerable<Owner> GetOwnersStuffByType(OwnerTypes type)
         {
             using (var context = new InventoryContext())
             {
                 context.Database.Log = Console.WriteLine;
-                return context.Inventory
-                    .Include("Owners")
-                    .GroupBy(o => o.Owner.Type)
-                    .Select(group => group.ToList())
-                    .FirstOrDefault();
+                return context.Owners
+                    .Include("Stuffs")
+                    .Where(o => o.Type == type)
+                    .ToList();
             }
         }
 
