@@ -1,6 +1,7 @@
 ﻿using Inventory.Classes;
 using Inventory.Classes.Enums;
 using Inventory.DataModel;
+using Inventory.DataModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;

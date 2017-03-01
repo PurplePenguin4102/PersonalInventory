@@ -92,6 +92,28 @@ namespace Inventory.DataModel.Repositories
             return FilteredOwners;
         }
 
+        public static IEnumerable<Stuff> GetOwnersStuff(Owner owner)
+        {
+            using (var context = new InventoryContext())
+            {
+                context.Database.Log = Console.WriteLine;
+                return context.Inventory.Where(s => s.Owner.Id == owner.Id).ToList();
+            }
+        }
+
+        public static IEnumerable<Stuff> GetOwnersStuffByType(OwnerTypes type)
+        {
+            using (var context = new InventoryContext())
+            {
+                context.Database.Log = Console.WriteLine;
+                return context.Inventory
+                    .Include("Owners")
+                    .GroupBy(o => o.Owner.Type)
+                    .Select(group => group.ToList())
+                    .FirstOrDefault();
+            }
+        }
+
         public static bool UpdateOwner(Owner updated)
         {
             int retVal;
