@@ -26,15 +26,13 @@ namespace Inventory.DataModel.Repositories
             return retVal != 0;
         }
 
-        public static Owner GetOwnerById(int id, string errorMsg = null)
+        public static Owner GetOwnerById(int id)
         {
-            Owner owner = null;
             using (var Context = new InventoryContext())
             {
                 Context.Database.Log = Console.WriteLine;
-                owner = Context.Owners.Where(o => o.Id == id).First();
+                return Context.Owners.Find(id);
             }
-            return owner;
         }
 
         public static IEnumerable<Owner> GetAllOwners()
@@ -133,6 +131,13 @@ namespace Inventory.DataModel.Repositories
             {
                 Context.Database.Log = Console.WriteLine;
                 Context.Owners.Attach(owner);
+                var stuffOwned = Context.Inventory.Where(s => s.Owner.Id == owner.Id).ToList();
+                foreach(var s in stuffOwned)
+                {
+                    s.Owner = null;
+                    
+                }
+                Context.SaveChanges();
                 Context.Entry(owner).State = EntityState.Deleted;
                 retVal = Context.SaveChanges();
             }

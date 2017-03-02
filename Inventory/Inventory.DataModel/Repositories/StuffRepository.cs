@@ -77,6 +77,12 @@ namespace Inventory.DataModel.Repositories
             {
                 context.Database.Log = Console.WriteLine;
                 context.Inventory.Attach(stuff);
+                var attached = context.Inventory.Where(s => s.PartOf.Id == stuff.Id).ToList();
+                foreach (var thing in attached)
+                {
+                    thing.PartOf = null;
+                }
+                context.SaveChanges();
                 context.Entry(stuff).State = EntityState.Deleted;
                 retVal = context.SaveChanges();
             }
@@ -89,7 +95,7 @@ namespace Inventory.DataModel.Repositories
             using (var context = new InventoryContext())
             {
                 context.Database.Log = Console.WriteLine;
-                return context.Inventory.Where(s => s.Id == id).FirstOrDefault();
+                return context.Inventory.Find(id);
             }
         }
 
@@ -98,7 +104,7 @@ namespace Inventory.DataModel.Repositories
             using (var context = new InventoryContext())
             {
                 context.Database.Log = Console.WriteLine;
-                return context.Inventory.ToList();
+                return context.Inventory.Include(s => s.Owner).Include(s => s.PartOf).ToList();
             }
         }
 

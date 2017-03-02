@@ -55,8 +55,11 @@
   <ItemGroup>
     <Compile Include="DbSetup.cs" />
     <Compile Include="FunctionExtensions\Extensions.cs" />
+    <Compile Include="OwnerInterface.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StuffInterface.cs" />
+    <Compile Include="Util\Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -18,5 +18,15 @@ namespace Inventory.Interface.FunctionExtensions
             }
             return sb.ToString().TrimEnd();
         }
+
+        public static string ToString(this List<Stuff> stuffs, object throwAway)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var stuff in stuffs)
+            {
+                sb.Append($"============================{Environment.NewLine}{stuff.ToString()}{Environment.NewLine}");
+            }
+            return sb.ToString().TrimEnd();
+        }
     }
 }
