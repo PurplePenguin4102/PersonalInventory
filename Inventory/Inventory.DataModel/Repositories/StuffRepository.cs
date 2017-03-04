@@ -22,6 +22,11 @@ namespace Inventory.DataModel.Repositories
                     context.Owners.Attach(stuff.Owner);
                     context.Entry(stuff.Owner).State = EntityState.Unchanged;
                 }
+                if (stuff.PartOf != null)
+                {
+                    context.Inventory.Attach(stuff.PartOf);
+                    context.Entry(stuff.PartOf).State = EntityState.Unchanged;
+                }
                 context.Inventory.Add(stuff);
                 retVal = context.SaveChanges();
             }
@@ -68,6 +73,21 @@ namespace Inventory.DataModel.Repositories
                 retVal = context.SaveChanges();
             }
             return retVal != 0;
+        }
+
+        public static bool UpdateStuff(Stuff[] stuff)
+        {
+            using (var context = new InventoryContext())
+            {
+                context.Database.Log = Console.WriteLine;
+                var ids = stuff.Select(s => s.Id);
+                var things = context.Inventory.Where(th => ids.Contains(th.Id)).ToList();
+                foreach (var thing in things)
+                {
+                    thing.Owner = stuff[0].Owner;
+                }
+                return context.SaveChanges() != 0;
+            }
         }
 
         public static bool DestroyStuff(Stuff stuff)
@@ -149,8 +169,30 @@ namespace Inventory.DataModel.Repositories
 
         public static bool GiveStuffToOwner(Stuff stuff, Owner owner)
         {
-            stuff.Owner = owner;
-            return UpdateStuff(stuff);
+            if (stuff.PartOf != null)
+                return false;
+            List<Stuff> stuffs = GetAllStuff().Where(s => s.PartOf != null && s.PartOf.Id == stuff.Id).ToList();
+            List<Stuff> things = new List<Stuff>();
+            things.Add(stuff);
+            foreach (var thing in stuffs)
+            {
+                GetAllSubStuff(thing, things);
+            }
+            foreach (var thing in things)
+            {
+                thing.Owner = owner;
+            }
+            return UpdateStuff(things.ToArray());
+        }
+
+        private static void GetAllSubStuff(Stuff thing, List<Stuff> things)
+        {
+            things.Add(thing);
+            List<Stuff> stuffs = GetAllStuff().Where(s => s.PartOf != null && s.PartOf.Id == thing.Id).ToList();
+            foreach(var item in stuffs)
+            {
+                GetAllSubStuff(item, things);
+            }
         }
 
         public static bool UnclaimStuff(Stuff stuff, Owner owner)

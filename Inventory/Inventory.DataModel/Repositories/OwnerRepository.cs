@@ -95,18 +95,18 @@ namespace Inventory.DataModel.Repositories
             using (var context = new InventoryContext())
             {
                 context.Database.Log = Console.WriteLine;
-                return context.Inventory.Where(s => s.Owner.Id == owner.Id).ToList();
+                return context.Inventory.Include(s => s.Owner).Where(s => s.Owner.Id == owner.Id).ToList();
             }
         }
 
-        public static IEnumerable<Owner> GetOwnersStuffByType(OwnerTypes type)
+        public static IEnumerable<Stuff> GetOwnersStuffByType(OwnerTypes type)
         {
             using (var context = new InventoryContext())
             {
                 context.Database.Log = Console.WriteLine;
-                return context.Owners
-                    .Include("Stuffs")
-                    .Where(o => o.Type == type)
+                return context.Inventory
+                    .Include(s => s.Owner)
+                    .Where(s => s.Owner.Type == type)
                     .ToList();
             }
         }

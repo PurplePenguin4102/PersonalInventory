@@ -21,17 +21,48 @@ namespace Inventory.Interface
 
         public static void SeeAllStuffByOwner()
         {
-            throw new NotImplementedException();
+            List<Owner> owners = OwnerRepository.GetAllOwners().ToList();
+            Console.WriteLine(owners.ToString(new object()));
+            Owner owner;
+            if (TextParser.MakeSelection(out owner, "Please select an owner : ", owners))
+            {
+                List<Stuff> stuffs = OwnerRepository.GetOwnersStuff(owner).ToList();
+                Console.WriteLine(stuffs.ToString(new object()));
+            }
         }
 
         public static void SeeAllStuffByOwnerType()
         {
-            throw new NotImplementedException();
+            int ans;
+            ans = TextParser.MakeSelection(typeof(OwnerTypes));
+            OwnerTypes type;
+            if (Enum.IsDefined(typeof(OwnerTypes), ans))
+            {
+                type = (OwnerTypes)ans;
+            }
+            else return;
+
+            List<Stuff> stuffs = OwnerRepository.GetOwnersStuffByType(type).ToList();
+            Console.WriteLine(stuffs.ToString(new object()));
+
         }
 
         public static void ChangeOwners()
         {
-            throw new NotImplementedException();
+            List<Stuff> stuffs = StuffRepository.GetAllStuff().ToList();
+            List<Owner> owners = OwnerRepository.GetAllOwners().ToList(); 
+            Console.WriteLine(stuffs.ToString(new object()));
+            Stuff thing;
+
+            Owner owner;
+            if (TextParser.MakeSelection(out thing, "Please select an object : ", stuffs) &&
+                TextParser.MakeSelection(out owner, "Please select an owner : ", owners))
+            {
+                if (StuffRepository.GiveStuffToOwner(thing, owner))
+                    Console.WriteLine(thing);
+                else
+                    Console.WriteLine("I can't do that, it belongs to an installation");
+            }
         }
 
         public static void InstallUninstallStuff()

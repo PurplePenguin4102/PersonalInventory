@@ -15,25 +15,16 @@ namespace Inventory.Interface
     {
         public static void DeleteOwner()
         {
-            int id = -1;
-            string input;
             List<Owner> owners = OwnerRepository.GetAllOwners().ToList();
             Console.WriteLine(owners.ToString(new object()));
-            while (id < 1)
+            Owner toBeKilled;
+            if (TextParser.MakeSelection(out toBeKilled, "Who is to be deleted? : ", owners))
             {
-                Console.Write($"Who is to be deleted? : ");
-                input = Utility.ReadAndCheckForQuit();
-                if (!int.TryParse(input, out id))
-                {
-                    Console.WriteLine("Please enter a valid number");
-                }
+                bool success = OwnerRepository.DestroyOwner(toBeKilled);
+
+                string msg = success ? "Update successful" : "Update failed";
+                Console.WriteLine(msg);
             }
-
-            Owner toBeKilled = OwnerRepository.GetOwnerById(id);
-            bool success = OwnerRepository.DestroyOwner(toBeKilled);
-
-            string msg = success ? "Update successful" : "Update failed";
-            Console.WriteLine(msg);
         }
 
         public static void UpdateOwner(OwnerTypes type)
