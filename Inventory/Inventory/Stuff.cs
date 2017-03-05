@@ -13,7 +13,7 @@ namespace Inventory.Classes
         public string Name { get; set; }
         public DateTime Acquired { get; set; }
         //public virtual Location Location { get; set; }
-        public virtual Owner Owner { get; set; }
+        public Owner Owner { get; set; }
         public StuffCategory Category { get; set; }
         public string SubCategory { get; set; }
         public bool InUse { get; set; }
@@ -21,7 +21,7 @@ namespace Inventory.Classes
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder($"{Id}\t{Name}\t\t{Acquired.ToShortDateString()}\t\t{Category.ToString()}\t{SubCategory}\t{InUse}");
+            StringBuilder sb = new StringBuilder($"{Id}\t{Name, -20}\t\t{Acquired.ToShortDateString()}\t\t{Category.ToString()}\t{SubCategory}\t{InUse}");
             if (PartOf != null)
                 sb.Append($"\r\nPart of :\r\n{PartOf.ToString(ToStringOptions.NoPartof | ToStringOptions.NoOwner)}");
             if (Owner != null)

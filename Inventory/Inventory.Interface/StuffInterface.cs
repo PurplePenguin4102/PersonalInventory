@@ -67,8 +67,32 @@ namespace Inventory.Interface
 
         public static void InstallUninstallStuff()
         {
-            throw new NotImplementedException();
-        }
+            List<Stuff> stuffs = StuffRepository.GetAllStuff().ToList();
+            Console.WriteLine(stuffs.ToString(new object()));
+            Stuff thing1, thing2;
+            TextParser.MakeSelection(out thing1, "Please select an object to install : ", stuffs);
+            if (thing1.PartOf != null)
+            {
+                Console.Write($"Object is installed in {thing1.PartOf.Name}... would you like to uninstall it? (y/n) ");
+                string yn = Console.ReadLine();
+                if (yn == "y")
+                {
+                    StuffRepository.RemoveStuffFromInstallation(thing1);
+                }
+                Console.Write("Would you like to install it into something else? (y/n) ");
+                yn = Console.ReadLine();
+                if (yn == "n")
+                {
+                    return;
+                }
+            }
+            TextParser.MakeSelection(out thing2, $"Please select another object to install {thing1.Name} into : ", stuffs);
+
+            StuffRepository.InstallStuff(thing1, thing2);
+            Console.WriteLine($"Updated {thing1.Name} to be part of {thing2.Name}");
+            Console.WriteLine(thing1);
+            Console.WriteLine(thing2);
+            }
 
         public static void UpdateStuff()
         {

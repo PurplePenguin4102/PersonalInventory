@@ -68,26 +68,10 @@ namespace Inventory.DataModel.Repositories
             {
                 context.Database.Log = Console.WriteLine;
                 context.Inventory.Attach(stuff);
-                var entry = context.Entry(stuff);
-                entry.State = EntityState.Modified;
+                context.Entry(stuff).State = EntityState.Modified;
                 retVal = context.SaveChanges();
             }
             return retVal != 0;
-        }
-
-        public static bool UpdateStuff(Stuff[] stuff)
-        {
-            using (var context = new InventoryContext())
-            {
-                context.Database.Log = Console.WriteLine;
-                var ids = stuff.Select(s => s.Id);
-                var things = context.Inventory.Where(th => ids.Contains(th.Id)).ToList();
-                foreach (var thing in things)
-                {
-                    thing.Owner = stuff[0].Owner;
-                }
-                return context.SaveChanges() != 0;
-            }
         }
 
         public static bool DestroyStuff(Stuff stuff)
@@ -171,18 +155,21 @@ namespace Inventory.DataModel.Repositories
         {
             if (stuff.PartOf != null)
                 return false;
-            List<Stuff> stuffs = GetAllStuff().Where(s => s.PartOf != null && s.PartOf.Id == stuff.Id).ToList();
             List<Stuff> things = new List<Stuff>();
-            things.Add(stuff);
-            foreach (var thing in stuffs)
-            {
-                GetAllSubStuff(thing, things);
-            }
+            GetAllSubStuff(stuff, things);
+            int count = 0;
             foreach (var thing in things)
             {
-                thing.Owner = owner;
+                using (var context = new InventoryContext())
+                {
+                    context.Database.Log = Console.WriteLine;
+                    context.Owners.Attach(owner);
+                    context.Inventory.Attach(thing);
+                    thing.Owner = owner;
+                    count += context.SaveChanges();
+                }
             }
-            return UpdateStuff(things.ToArray());
+            return count != 0;
         }
 
         private static void GetAllSubStuff(Stuff thing, List<Stuff> things)
@@ -203,14 +190,27 @@ namespace Inventory.DataModel.Repositories
 
         public static bool InstallStuff(Stuff stuff, Stuff installedIn)
         {
-            stuff.PartOf = installedIn;
-            return UpdateStuff(stuff);
+            using (var context = new InventoryContext())
+            {
+                context.Database.Log = Console.WriteLine;
+                context.Inventory.Attach(stuff);
+                context.Inventory.Attach(installedIn);
+                stuff.PartOf = installedIn;
+                return context.SaveChanges() != 0;
+            }
         }
 
-        public static bool RemoveStuffFromInstallation(Stuff stuff, Stuff installation)
+        public static bool RemoveStuffFromInstallation(Stuff stuff)
         {
-            stuff.PartOf = null;
-            return UpdateStuff(stuff);
+            if (stuff.PartOf == null)
+                return false;
+            using (var context = new InventoryContext())
+            {
+                context.Database.Log = Console.WriteLine;
+                context.Inventory.Attach(stuff);
+                stuff.PartOf = null;
+                return context.SaveChanges() != 0;
+            }
         }
 
         public static bool AddStuffToInstallation(IEnumerable<Stuff> stuff, Stuff installation)

@@ -18,7 +18,7 @@ namespace Inventory.Classes
 
         public override string ToString()
         {
-            return $"{Id}\t{FirstName}\t\t{LastName}\t\t{Birthday.ToShortDateString()}\t{Gender.ToString()}\t{Type.ToString()}";
+            return $"{Id}\t{FirstName}\t{LastName, 15}\t\t{Birthday.ToShortDateString()}\t{Gender.ToString()}\t{Type.ToString()}";
         }
         //public virtual List<Stuff> StuffOwned { get; set; }
         //public virtual List<Task> TasksToDo { get; set; }
