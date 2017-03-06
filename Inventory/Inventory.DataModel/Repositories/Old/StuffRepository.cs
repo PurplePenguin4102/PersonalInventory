@@ -7,7 +7,7 @@ using Inventory.Classes;
 using Inventory.Classes.Enums;
 using System.Data.Entity;
 
-namespace Inventory.DataModel.Repositories
+namespace Inventory.DataModel.Repositories.Old
 {
     public static class StuffRepository
     {

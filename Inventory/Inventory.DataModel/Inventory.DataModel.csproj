@@ -69,6 +69,8 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Old\OwnerRepository.cs" />
+    <Compile Include="Repositories\Old\StuffRepository.cs" />
     <Compile Include="Repositories\OwnerRepository.cs" />
     <Compile Include="Repositories\StuffRepository.cs" />
   </ItemGroup>
