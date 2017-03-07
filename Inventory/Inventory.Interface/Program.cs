@@ -11,11 +11,6 @@ namespace Inventory.Interface
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to your inventory! 'quit' or 'q' to exit");
-            if (OwnerRepository.IsTableEmpty())
-                DbSetup.SeedOwners();
-            if (StuffRepository.IsTableEmpty())
-                DbSetup.SeedStuff();
-
             
             string input = "";
             while (input.ToLower() != "quit" && input.ToLower() != "q")

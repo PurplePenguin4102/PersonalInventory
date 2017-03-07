@@ -53,7 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbSetup.cs" />
     <Compile Include="FunctionExtensions\Extensions.cs" />
     <Compile Include="OwnerInterface.cs" />
     <Compile Include="Program.cs" />

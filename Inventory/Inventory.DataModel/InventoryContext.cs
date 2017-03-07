@@ -14,5 +14,10 @@ namespace Inventory.DataModel
         //public DbSet<Location> Locations { get; set; }
         //public DbSet<Task> ToDoList { get; set; }
         //public DbSet<History> History { get; set; }
+
+        public InventoryContext()
+        {
+            Database.SetInitializer(new DropCreateDatabaseAlways<InventoryContext>());
+        }
     }
 }
