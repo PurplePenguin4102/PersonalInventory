@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Inventory.Interface.Util
+namespace Inventory.ConsoleUI.Util
 {
     public static class Utility
     {

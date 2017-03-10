@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Inventory.Classes;
-using Inventory.Interface.Util;
+using Inventory.ConsoleUI.Util;
 
-namespace Inventory.Interface
+namespace Inventory.ConsoleUI
 {
     public static class TextParser
     {
-        public static bool MakeSelection<T>(out T obj, string msg, List<T> db) 
-            where T : IContainsId
+        public static Option SelectItemFromList(string msg, List<Option> db) 
         {
             string input;
             int id = -1;
@@ -24,8 +23,8 @@ namespace Inventory.Interface
                     Console.WriteLine("Please enter a valid number");
                 }
             }
-            obj = db.FirstOrDefault(g => g.Id == id);
-            return obj != null;
+            Option obj = db.FirstOrDefault(g => g.Id == id);
+            return obj;
         }
 
         internal static int MakeSelection(Type type)

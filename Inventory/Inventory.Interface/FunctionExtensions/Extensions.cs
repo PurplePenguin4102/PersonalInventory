@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Inventory.Interface.FunctionExtensions
+namespace Inventory.ConsoleUI.FunctionExtensions
 {
     public static class Extensions
     {

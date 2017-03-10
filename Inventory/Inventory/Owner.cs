@@ -7,7 +7,7 @@ using Inventory.Classes.Enums;
 
 namespace Inventory.Classes
 {
-    public class Owner : IContainsId
+    public class Owner
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

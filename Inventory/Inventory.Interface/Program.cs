@@ -1,9 +1,9 @@
 ﻿using System;
 using Inventory.DataModel.Repositories;
 using Inventory.Classes.Enums;
-using Inventory.Interface.Util;
+using Inventory.ConsoleUI.Util;
 
-namespace Inventory.Interface
+namespace Inventory.ConsoleUI
 {
     class Program
     {
@@ -59,21 +59,21 @@ namespace Inventory.Interface
         {
             switch (selection)
             {
-                case 1: OwnerInterface.SeePeople();    break;
-                case 2: OwnerInterface.SeeCats();      break;
-                case 3: OwnerInterface.AddOwner(OwnerTypes.Human);    break;
-                case 4: OwnerInterface.AddOwner(OwnerTypes.Cat);       break;
-                case 5: OwnerInterface.UpdateOwner(OwnerTypes.Human); break;
-                case 6: OwnerInterface.UpdateOwner(OwnerTypes.Cat);    break;
-                case 7: OwnerInterface.DeleteOwner();  break;
-                case 8: StuffInterface.SeeAllStuff(); break;
-                case 9: StuffInterface.SeeAllStuffByOwner(); break;
-                case 10: StuffInterface.SeeAllStuffByOwnerType(); break;
-                case 11: StuffInterface.ChangeOwners(); break;
-                case 12: StuffInterface.InstallUninstallStuff(); break;
-                case 13: StuffInterface.UpdateStuff(); break;
-                case 14: StuffInterface.DeleteStuff(); break;
-                case 15: StuffInterface.AddStuff(); break;
+                case 1: OwnerConsoleUI.SeePeople();    break;
+                case 2: OwnerConsoleUI.SeeCats();      break;
+                case 3: OwnerConsoleUI.AddOwner(OwnerTypes.Human);    break;
+                case 4: OwnerConsoleUI.AddOwner(OwnerTypes.Cat);       break;
+                case 5: OwnerConsoleUI.UpdateOwner(OwnerTypes.Human); break;
+                case 6: OwnerConsoleUI.UpdateOwner(OwnerTypes.Cat);    break;
+                case 7: OwnerConsoleUI.DeleteOwner();  break;
+                case 8: StuffConsoleUI.SeeAllStuff(); break;
+                case 9: StuffConsoleUI.SeeAllStuffByOwner(); break;
+                case 10: StuffConsoleUI.SeeAllStuffByOwnerType(); break;
+                case 11: StuffConsoleUI.ChangeOwners(); break;
+                case 12: StuffConsoleUI.InstallUninstallStuff(); break;
+                case 13: StuffConsoleUI.UpdateStuff(); break;
+                case 14: StuffConsoleUI.DeleteStuff(); break;
+                case 15: StuffConsoleUI.AddStuff(); break;
                 default: throw new ArgumentException();
             }
             Console.WriteLine("============================");

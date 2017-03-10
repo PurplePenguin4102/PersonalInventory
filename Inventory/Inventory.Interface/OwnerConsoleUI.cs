@@ -1,30 +1,33 @@
 ﻿using Inventory.Classes;
 using Inventory.Classes.Enums;
 using Inventory.DataModel.Repositories;
-using Inventory.Interface.FunctionExtensions;
-using Inventory.Interface.Util;
+using Inventory.ConsoleUI.FunctionExtensions;
+using Inventory.ConsoleUI.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Inventory.Interface
+namespace Inventory.ConsoleUI
 {
-    public static class OwnerInterface
+    public static class OwnerConsoleUI
     {
         public static void DeleteOwner()
         {
             List<Owner> owners = OwnerRepository.GetAllOwners().ToList();
             Console.WriteLine(owners.ToString(new object()));
-            Owner toBeKilled;
-            if (TextParser.MakeSelection(out toBeKilled, "Who is to be deleted? : ", owners))
-            {
-                bool success = OwnerRepository.DestroyOwner(toBeKilled);
+            List<Option> UIList = Option.OptionsFromOwners(owners);
+            Owner toBeKilled = TextParser.SelectItemFromList("Who is to be deleted? : ", UIList).Data as Owner;
+            bool success = OwnerRepository.DestroyOwner(toBeKilled);
+            string msg = success ? "Update successful" : "Update failed";
+            Console.WriteLine(msg);
+            ModifyIList(new List<object>());
+        }
 
-                string msg = success ? "Update successful" : "Update failed";
-                Console.WriteLine(msg);
-            }
+        private static IList<object> ModifyIList(IList<object> l)
+        {
+            return null;
         }
 
         public static void UpdateOwner(OwnerTypes type)
