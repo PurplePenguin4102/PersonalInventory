@@ -10,30 +10,37 @@ using System.Threading.Tasks;
 
 namespace Inventory.ConsoleUI
 {
-    public static class OwnerConsoleUI
+    public class OwnerConsoleUI
     {
-        public static void DeleteOwner()
+        private OwnerRepository ownerDB;
+
+        public OwnerConsoleUI()
         {
-            Owners owners = OwnerRepository.GetAllOwners().ToList();
+            ownerDB = new OwnerRepository();
+        }
+
+        public void DeleteOwner()
+        {
+            Owners owners = ownerDB.GetAllOwners().ToList();
             Console.WriteLine(owners.ToString());
             List<Option> UIList = Option.OptionsFromOwners(owners);
             Owner toBeKilled = TextParser.SelectItemFromList("Who is to be deleted? : ", UIList).Data as Owner;
-            bool success = OwnerRepository.DestroyOwner(toBeKilled);
+            bool success = ownerDB.DestroyOwner(toBeKilled);
             string msg = success ? "Update successful" : "Update failed";
             Console.WriteLine(msg);
             ModifyIList(new List<object>());
         }
 
-        private static IList<object> ModifyIList(IList<object> l)
+        private IList<object> ModifyIList(IList<object> l)
         {
             return null;
         }
 
-        public static void UpdateOwner(OwnerTypes type)
+        public void UpdateOwner(OwnerTypes type)
         {
             int id = -1;
             string input;
-            Owners owners = OwnerRepository.GetOwnersByType(type).ToList();
+            Owners owners = ownerDB.GetOwnersByType(type).ToList();
             Console.WriteLine(owners.ToString());
             while (id < 1)
             {
@@ -48,7 +55,7 @@ namespace Inventory.ConsoleUI
             Owner owner = null;
             try
             {
-                owner = OwnerRepository.GetOwnerById(id);
+                owner = ownerDB.GetOwnerById(id);
                 Console.WriteLine($"You selected : {owner.ToString()}");
             }
             catch
@@ -73,13 +80,13 @@ namespace Inventory.ConsoleUI
 
             bool success = InsertNewValue(id, input, owner);
 
-            success = OwnerRepository.UpdateOwner(owner);
+            success = ownerDB.UpdateOwner(owner);
             string msg = success ? "Update successful" : "Update failed";
             Console.WriteLine(msg);
 
         }
 
-        public static bool InsertNewValue(int field, string value, Owner oldOwner)
+        public bool InsertNewValue(int field, string value, Owner oldOwner)
         {
             switch (field)
             {
@@ -102,7 +109,7 @@ namespace Inventory.ConsoleUI
             return false;
         }
 
-        public static void AddOwner(OwnerTypes type)
+        public void AddOwner(OwnerTypes type)
         {
             Console.Write("First Name : ");
             string fn = Utility.ReadAndCheckForQuit();
@@ -128,18 +135,18 @@ namespace Inventory.ConsoleUI
                 Type = type,
             };
 
-            OwnerRepository.CreateOwner(new Owner[] { newGuy });
+            ownerDB.CreateOwner(newGuy);
         }
 
-        public static void SeeCats()
+        public void SeeCats()
         {
-            Owners owners = OwnerRepository.GetOwnersByType(OwnerTypes.Cat).ToList();
+            Owners owners = ownerDB.GetOwnersByType(OwnerTypes.Cat).ToList();
             Console.WriteLine(owners.ToString());
         }
 
-        public static void SeePeople()
+        public void SeePeople()
         {
-            Owners owners = OwnerRepository.GetOwnersByType(OwnerTypes.Human).ToList();
+            Owners owners = ownerDB.GetOwnersByType(OwnerTypes.Human).ToList();
             Console.WriteLine(owners.ToString());
         }
     }

@@ -10,25 +10,34 @@ using Inventory.Classes.Enums;
 
 namespace Inventory.ConsoleUI
 {
-    public static class PossessionConsoleUI
+    public class PossessionConsoleUI
     {
-        public static void SeeAllStuff()
+        private PossessionRepository possessionDB;
+        private OwnerRepository ownerDB;
+
+        public PossessionConsoleUI()
         {
-            Possessions possessions = PossessionRepository.GetAllPossessions().ToList();
+            possessionDB = new PossessionRepository();
+            ownerDB = new OwnerRepository();
+        }
+
+        public void SeeAllStuff()
+        {
+            Possessions possessions = possessionDB.GetAllPossessions().ToList();
             Console.WriteLine(possessions.ToString());
         }
 
-        public static void SeeAllStuffByOwner()
+        public void SeeAllStuffByOwner()
         {
-            List<Owner> owners = OwnerRepository.GetAllOwners().ToList();
+            List<Owner> owners = ownerDB.GetAllOwners().ToList();
             List<Option> options = Option.OptionsFromOwners(owners);
             Console.WriteLine(owners.ToString());
             Owner owner = TextParser.SelectItemFromList("Please select an owner : ", options).Data as Owner;
-            List<Possession> possessions = OwnerRepository.GetOwnersStuff(owner).ToList();
+            List<Possession> possessions = ownerDB.GetOwnersPossessions(owner).ToList();
             Console.WriteLine(possessions.ToString());
         }
 
-        public static void SeeAllStuffByOwnerType()
+        public void SeeAllStuffByOwnerType()
         {
             int ans;
             ans = TextParser.MakeSelection(typeof(OwnerTypes));
@@ -39,31 +48,31 @@ namespace Inventory.ConsoleUI
             }
             else return;
 
-            List<Possession> possessions = OwnerRepository.GetOwnersStuffByType(type).ToList();
+            List<Possession> possessions = ownerDB.GetPossessionsByOwnerType(type).ToList();
             Console.WriteLine(possessions.ToString());
 
         }
 
-        public static void ChangeOwners()
+        public void ChangeOwners()
         {
-            List<Possession> possessions = PossessionRepository.GetAllPossessions().ToList();
-            List<Owner> owners = OwnerRepository.GetAllOwners().ToList(); 
+            List<Possession> possessions = possessionDB.GetAllPossessions().ToList();
+            List<Owner> owners = ownerDB.GetAllOwners().ToList(); 
             Console.WriteLine(possessions.ToString());
 
             Possession thing = TextParser.SelectItemFromList("Please select a possession : ", Option.OptionsFromPossessions(possessions)).Data as Possession;
             Owner owner = TextParser.SelectItemFromList("Please select a new owner : ", Option.OptionsFromOwners(owners)).Data as Owner;
 
 
-            if (PossessionRepository.GivePossessionToOwner(thing, owner))
+            if (possessionDB.GivePossessionToOwner(thing, owner))
                 Console.WriteLine(thing);
             else
                 Console.WriteLine("I can't do that, it belongs to an installation");
             
         }
 
-        public static void InstallUninstallStuff()
+        public void InstallUninstallStuff()
         {
-            List<Possession> possessions = PossessionRepository.GetAllPossessions().ToList();
+            List<Possession> possessions = possessionDB.GetAllPossessions().ToList();
             Console.WriteLine(possessions.ToString());
             Possession thing1 = TextParser.SelectItemFromList("Please select an object to install : ", Option.OptionsFromPossessions(possessions)).Data as Possession;
             if (thing1.PartOf != null)
@@ -72,7 +81,7 @@ namespace Inventory.ConsoleUI
                 string yn = Console.ReadLine();
                 if (yn == "y")
                 {
-                    PossessionRepository.RemovePossessionFromInstallation(thing1);
+                    possessionDB.RemovePossessionFromInstallation(thing1);
                 }
                 Console.Write("Would you like to install it into something else? (y/n) ");
                 yn = Console.ReadLine();
@@ -83,23 +92,23 @@ namespace Inventory.ConsoleUI
             }
             Possession thing2 = TextParser.SelectItemFromList($"Please select another object to install {thing1.Name} into : ", Option.OptionsFromPossessions(possessions)).Data as Possession;
 
-            PossessionRepository.InstallPossession(thing1, thing2);
+            possessionDB.InstallPossession(thing1, thing2);
             Console.WriteLine($"Updated {thing1.Name} to be part of {thing2.Name}");
             Console.WriteLine(thing1);
             Console.WriteLine(thing2);
             }
 
-        public static void UpdateStuff()
+        public void UpdateStuff()
         {
             throw new NotImplementedException();
         }
 
-        public static void DeleteStuff()
+        public void DeleteStuff()
         {
             throw new NotImplementedException();
         }
 
-        public static void AddStuff()
+        public void AddStuff()
         {
             throw new NotImplementedException();
         }

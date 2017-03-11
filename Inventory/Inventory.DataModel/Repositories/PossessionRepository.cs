@@ -9,9 +9,9 @@ using System.Data.Entity;
 
 namespace Inventory.DataModel.Repositories
 {
-    public static class PossessionRepository
+    public class PossessionRepository
     {
-        public static bool CreatePossession(Possession possession)
+        public bool CreatePossession(Possession possession)
         {
             int retVal;
             using (var context = new InventoryContext())
@@ -33,7 +33,7 @@ namespace Inventory.DataModel.Repositories
             return retVal != 0;
         }
 
-        public static bool IsTableEmpty()
+        public bool IsTableEmpty()
         {
             using (InventoryContext Context = new InventoryContext())
             {
@@ -41,7 +41,7 @@ namespace Inventory.DataModel.Repositories
             }
         }
 
-        public static bool CreateLotsOfPossession(Possession[] possession)
+        public bool CreateLotsOfPossession(Possession[] possession)
         {
             int retVal;
             using (var context = new InventoryContext())
@@ -61,7 +61,7 @@ namespace Inventory.DataModel.Repositories
             return retVal != 0;
         }
 
-        public static bool UpdatePossession(Possession possession)
+        public bool UpdatePossession(Possession possession)
         {
             using (var context = new InventoryContext())
             {
@@ -72,7 +72,7 @@ namespace Inventory.DataModel.Repositories
             }
         }
 
-        public static bool DestroyPossession(Possession possession)
+        public bool DestroyPossession(Possession possession)
         {
             using (var context = new InventoryContext())
             {
@@ -90,7 +90,7 @@ namespace Inventory.DataModel.Repositories
         }
 
         // queries
-        public static Possession GetPossessionById(int id)
+        public Possession GetPossessionById(int id)
         {
             using (var context = new InventoryContext())
             {
@@ -99,7 +99,7 @@ namespace Inventory.DataModel.Repositories
             }
         }
 
-        public static List<Possession> GetAllPossessions()
+        public List<Possession> GetAllPossessions()
         {
             using (var context = new InventoryContext())
             {
@@ -108,7 +108,7 @@ namespace Inventory.DataModel.Repositories
             }
         }
 
-        public static List<Possession> GetPossessionsByCategory(PossessionCategory sc)
+        public List<Possession> GetPossessionsByCategory(PossessionCategory sc)
         {
             using (var context = new InventoryContext())
             {
@@ -117,7 +117,7 @@ namespace Inventory.DataModel.Repositories
             }
         }
 
-        public static List<Possession> GetPossessionsAfterDate(DateTime dt, bool ordered = false)
+        public List<Possession> GetPossessionsAfterDate(DateTime dt, bool ordered = false)
         {
             using (var context = new InventoryContext())
             {
@@ -131,7 +131,7 @@ namespace Inventory.DataModel.Repositories
             }
         }
 
-        public static List<Possession> GetPossessionsInUse()
+        public List<Possession> GetPossessionsInUse()
         {
             using (var context = new InventoryContext())
             {
@@ -140,7 +140,7 @@ namespace Inventory.DataModel.Repositories
             }
         }
 
-        public static List<Possession> GetPossessionsInInstallation(Possession installation)
+        public List<Possession> GetPossessionsInInstallation(Possession installation)
         {
             using (var context = new InventoryContext())
             {
@@ -149,7 +149,7 @@ namespace Inventory.DataModel.Repositories
             }
         }
 
-        public static bool GivePossessionToOwner(Possession possession, Owner owner)
+        public bool GivePossessionToOwner(Possession possession, Owner owner)
         {
             if (possession.PartOf != null)
                 return false;
@@ -171,13 +171,13 @@ namespace Inventory.DataModel.Repositories
             return true;
         }
         
-        public static bool UnclaimPossession(Possession possession, Owner owner)
+        public bool UnclaimPossession(Possession possession, Owner owner)
         {
             possession.Owner = null;
             return UpdatePossession(possession);
         }
 
-        public static bool InstallPossession(Possession possession, Possession installedIn)
+        public bool InstallPossession(Possession possession, Possession installedIn)
         {
             using (var context = new InventoryContext())
             {
@@ -189,7 +189,7 @@ namespace Inventory.DataModel.Repositories
             }
         }
 
-        public static bool RemovePossessionFromInstallation(Possession possession)
+        public bool RemovePossessionFromInstallation(Possession possession)
         {
             if (possession.PartOf == null)
                 return false;
@@ -202,7 +202,7 @@ namespace Inventory.DataModel.Repositories
             }
         }
 
-        public static bool AddPossessionToInstallation(IEnumerable<Possession> possession, Possession installation)
+        public bool AddPossessionToInstallation(IEnumerable<Possession> possession, Possession installation)
         {
             foreach(var s in possession)
             {
