@@ -11,7 +11,8 @@ namespace Inventory.ConsoleUI
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to your inventory! 'quit' or 'q' to exit");
-            
+            OwnerConsoleUI ownerUI = new OwnerConsoleUI();
+            PossessionConsoleUI possessionUI = new PossessionConsoleUI();
             string input = "";
             while (input.ToLower() != "quit" && input.ToLower() != "q")
             {
@@ -26,7 +27,7 @@ namespace Inventory.ConsoleUI
                     Console.WriteLine($"Please enter a number 1-{MAX_NUM}");
                     continue;
                 }
-                HandleSelection(selection);
+                HandleSelection(selection, ownerUI, possessionUI);
             }
 
         }
@@ -55,25 +56,26 @@ namespace Inventory.ConsoleUI
             Console.Write(":>");
         }
 
-        private static void HandleSelection(int selection)
+        private static void HandleSelection(int selection, OwnerConsoleUI ownerUI, PossessionConsoleUI possessionUI)
         {
+
             switch (selection)
             {
-                case 1: OwnerConsoleUI.SeePeople();    break;
-                case 2: OwnerConsoleUI.SeeCats();      break;
-                case 3: OwnerConsoleUI.AddOwner(OwnerTypes.Human);    break;
-                case 4: OwnerConsoleUI.AddOwner(OwnerTypes.Cat);       break;
-                case 5: OwnerConsoleUI.UpdateOwner(OwnerTypes.Human); break;
-                case 6: OwnerConsoleUI.UpdateOwner(OwnerTypes.Cat);    break;
-                case 7: OwnerConsoleUI.DeleteOwner();  break;
-                case 8: PossessionConsoleUI.SeeAllStuff(); break;
-                case 9: PossessionConsoleUI.SeeAllStuffByOwner(); break;
-                case 10: PossessionConsoleUI.SeeAllStuffByOwnerType(); break;
-                case 11: PossessionConsoleUI.ChangeOwners(); break;
-                case 12: PossessionConsoleUI.InstallUninstallStuff(); break;
-                case 13: PossessionConsoleUI.UpdateStuff(); break;
-                case 14: PossessionConsoleUI.DeleteStuff(); break;
-                case 15: PossessionConsoleUI.AddStuff(); break;
+                case 1: ownerUI.SeePeople();    break;
+                case 2: ownerUI.SeeCats();      break;
+                case 3: ownerUI.AddOwner(OwnerTypes.Human);    break;
+                case 4: ownerUI.AddOwner(OwnerTypes.Cat);       break;
+                case 5: ownerUI.UpdateOwner(OwnerTypes.Human); break;
+                case 6: ownerUI.UpdateOwner(OwnerTypes.Cat);    break;
+                case 7: ownerUI.DeleteOwner();  break;
+                case 8:  possessionUI.SeeAllStuff(); break;
+                case 9:  possessionUI.SeeAllStuffByOwner(); break;
+                case 10: possessionUI.SeeAllStuffByOwnerType(); break;
+                case 11: possessionUI.ChangeOwners(); break;
+                case 12: possessionUI.InstallUninstallStuff(); break;
+                case 13: possessionUI.UpdateStuff(); break;
+                case 14: possessionUI.DeleteStuff(); break;
+                case 15: possessionUI.AddStuff(); break;
                 default: throw new ArgumentException();
             }
             Console.WriteLine("============================");

@@ -20,7 +20,8 @@ namespace Inventory.DataModel.Repositories
             using (InventoryContext Context = new InventoryContext())
             {
                 Context.Database.Log = Console.WriteLine;
-                Context.Owners.Add(newOwner);
+                if (OwnerRules.VerifyInsert(newOwner))
+                    Context.Owners.Add(newOwner);
                 return Context.SaveChanges() != 0;
             }
         }
@@ -33,7 +34,8 @@ namespace Inventory.DataModel.Repositories
             using (InventoryContext Context = new InventoryContext())
             {
                 Context.Database.Log = Console.WriteLine;
-                Context.Owners.AddRange(newOwners);
+                if (newOwners.All(o => OwnerRules.VerifyInsert(o)))
+                    Context.Owners.AddRange(newOwners);
                 return Context.SaveChanges() != 0;
             }
         }
@@ -70,7 +72,10 @@ namespace Inventory.DataModel.Repositories
             using (InventoryContext Context = new InventoryContext())
             {
                 Context.Database.Log = Console.WriteLine;
-                return Context.Owners.Where(owner => owner.FirstName.ToLower() == Name.ToLower()).ToList();
+                return 
+                    (from owner in Context.Owners
+                     where owner.FirstName == Name
+                     select owner).ToList();
             }
         }
 
@@ -94,7 +99,9 @@ namespace Inventory.DataModel.Repositories
             using (InventoryContext Context = new InventoryContext())
             {
                 Context.Database.Log = Console.WriteLine;
-                return Context.Owners.Where(owner => owner.Type == type).ToList();
+                return (from owner in Context.Owners
+                        where owner.Type == type
+                        select owner).ToList();
             }
         }
 
