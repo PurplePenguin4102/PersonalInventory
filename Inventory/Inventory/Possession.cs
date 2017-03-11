@@ -7,17 +7,17 @@ using Inventory.Classes.Enums;
 
 namespace Inventory.Classes
 {
-    public class Stuff
+    public class Possession
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime Acquired { get; set; }
         //public virtual Location Location { get; set; }
         public Owner Owner { get; set; }
-        public StuffCategory Category { get; set; }
+        public PossessionCategory Category { get; set; }
         public string SubCategory { get; set; }
         public bool InUse { get; set; }
-        public Stuff PartOf { get; set; }
+        public Possession PartOf { get; set; }
 
         public override string ToString()
         {

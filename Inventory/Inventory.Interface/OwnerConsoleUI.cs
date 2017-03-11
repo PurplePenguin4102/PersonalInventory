@@ -1,7 +1,6 @@
 ﻿using Inventory.Classes;
 using Inventory.Classes.Enums;
 using Inventory.DataModel.Repositories;
-using Inventory.ConsoleUI.FunctionExtensions;
 using Inventory.ConsoleUI.Util;
 using System;
 using System.Collections.Generic;
@@ -15,8 +14,8 @@ namespace Inventory.ConsoleUI
     {
         public static void DeleteOwner()
         {
-            List<Owner> owners = OwnerRepository.GetAllOwners().ToList();
-            Console.WriteLine(owners.ToString(new object()));
+            Owners owners = OwnerRepository.GetAllOwners().ToList();
+            Console.WriteLine(owners.ToString());
             List<Option> UIList = Option.OptionsFromOwners(owners);
             Owner toBeKilled = TextParser.SelectItemFromList("Who is to be deleted? : ", UIList).Data as Owner;
             bool success = OwnerRepository.DestroyOwner(toBeKilled);
@@ -34,8 +33,8 @@ namespace Inventory.ConsoleUI
         {
             int id = -1;
             string input;
-            List<Owner> owners = OwnerRepository.GetOwnersByType(type).ToList();
-            Console.WriteLine(owners.ToString(new object()));
+            Owners owners = OwnerRepository.GetOwnersByType(type).ToList();
+            Console.WriteLine(owners.ToString());
             while (id < 1)
             {
                 Console.Write($"Which {type.ToString()} would you like? : ");
@@ -52,7 +51,7 @@ namespace Inventory.ConsoleUI
                 owner = OwnerRepository.GetOwnerById(id);
                 Console.WriteLine($"You selected : {owner.ToString()}");
             }
-            catch (Exception e)
+            catch
             {
                 Console.WriteLine($"Couldn't find that... please enter valid id");
                 UpdateOwner(type);
@@ -134,14 +133,14 @@ namespace Inventory.ConsoleUI
 
         public static void SeeCats()
         {
-            List<Owner> owners = OwnerRepository.GetOwnersByType(OwnerTypes.Cat).ToList();
-            Console.WriteLine(owners.ToString(new object()));
+            Owners owners = OwnerRepository.GetOwnersByType(OwnerTypes.Cat).ToList();
+            Console.WriteLine(owners.ToString());
         }
 
         public static void SeePeople()
         {
-            List<Owner> owners = OwnerRepository.GetOwnersByType(OwnerTypes.Human).ToList();
-            Console.WriteLine(owners.ToString(new object()));
+            Owners owners = OwnerRepository.GetOwnersByType(OwnerTypes.Human).ToList();
+            Console.WriteLine(owners.ToString());
         }
     }
 }

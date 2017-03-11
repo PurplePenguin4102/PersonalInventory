@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -53,12 +54,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FunctionExtensions\Extensions.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="OwnerConsoleUI.cs" />
+    <Compile Include="Owners.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StuffConsoleUI.cs" />
+    <Compile Include="PossessionConsoleUI.cs" />
+    <Compile Include="Possessions.cs" />
     <Compile Include="TextParser.cs" />
     <Compile Include="Util\Utility.cs" />
   </ItemGroup>

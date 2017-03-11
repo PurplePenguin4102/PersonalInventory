@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Inventory.Classes.Enums
 {
-    public enum StuffCategory
+    public enum PossessionCategory
     {
         Misc,
         Electronics,

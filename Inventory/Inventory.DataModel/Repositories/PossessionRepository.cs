@@ -7,27 +7,27 @@ using Inventory.Classes;
 using Inventory.Classes.Enums;
 using System.Data.Entity;
 
-namespace Inventory.DataModel.Repositories.Old
+namespace Inventory.DataModel.Repositories
 {
     public static class PossessionRepository
     {
-        public static bool CreateStuff(Possession stuff)
+        public static bool CreatePossession(Possession possession)
         {
             int retVal;
             using (var context = new InventoryContext())
             {
                 context.Database.Log = Console.WriteLine;
-                if (stuff.Owner != null)
+                if (possession.Owner != null)
                 {
-                    context.Owners.Attach(stuff.Owner);
-                    context.Entry(stuff.Owner).State = EntityState.Unchanged;
+                    context.Owners.Attach(possession.Owner);
+                    context.Entry(possession.Owner).State = EntityState.Unchanged;
                 }
-                if (stuff.PartOf != null)
+                if (possession.PartOf != null)
                 {
-                    context.Possessions.Attach(stuff.PartOf);
-                    context.Entry(stuff.PartOf).State = EntityState.Unchanged;
+                    context.Possessions.Attach(possession.PartOf);
+                    context.Entry(possession.PartOf).State = EntityState.Unchanged;
                 }
-                context.Possessions.Add(stuff);
+                context.Possessions.Add(possession);
                 retVal = context.SaveChanges();
             }
             return retVal != 0;
@@ -41,60 +41,56 @@ namespace Inventory.DataModel.Repositories.Old
             }
         }
 
-        public static bool CreateLotsOfStuff(Possession[] stuff)
+        public static bool CreateLotsOfPossession(Possession[] possession)
         {
             int retVal;
             using (var context = new InventoryContext())
             {
                 context.Database.Log = Console.WriteLine;
-                foreach (Possession s in stuff)
+                foreach (Possession p in possession)
                 {
-                    if (s.Owner != null)
+                    if (p.Owner != null)
                     {
-                        context.Owners.Attach(s.Owner);
-                        context.Entry(s.Owner).State = EntityState.Unchanged;
+                        context.Owners.Attach(p.Owner);
+                        context.Entry(p.Owner).State = EntityState.Unchanged;
                     }
                 }
-                context.Possessions.AddRange(stuff);
+                context.Possessions.AddRange(possession);
                 retVal = context.SaveChanges();
             }
             return retVal != 0;
         }
 
-        public static bool UpdateStuff(Possession stuff)
+        public static bool UpdatePossession(Possession possession)
         {
-            int retVal;
             using (var context = new InventoryContext())
             {
                 context.Database.Log = Console.WriteLine;
-                context.Possessions.Attach(stuff);
-                context.Entry(stuff).State = EntityState.Modified;
-                retVal = context.SaveChanges();
+                context.Possessions.Attach(possession);
+                context.Entry(possession).State = EntityState.Modified;
+                return context.SaveChanges() != 0;
             }
-            return retVal != 0;
         }
 
-        public static bool DestroyStuff(Possession stuff)
+        public static bool DestroyPossession(Possession possession)
         {
-            int retVal;
             using (var context = new InventoryContext())
             {
                 context.Database.Log = Console.WriteLine;
-                context.Possessions.Attach(stuff);
-                var attached = context.Possessions.Where(s => s.PartOf.Id == stuff.Id).ToList();
+                context.Possessions.Attach(possession);
+                var attached = context.Possessions.Where(s => s.PartOf.Id == possession.Id).ToList();
                 foreach (var thing in attached)
                 {
                     thing.PartOf = null;
                 }
                 context.SaveChanges();
-                context.Entry(stuff).State = EntityState.Deleted;
-                retVal = context.SaveChanges();
+                context.Entry(possession).State = EntityState.Deleted;
+                return context.SaveChanges() != 0;
             }
-            return retVal != 0;
         }
 
         // queries
-        public static Possession GetStuffById(int id)
+        public static Possession GetPossessionById(int id)
         {
             using (var context = new InventoryContext())
             {
@@ -103,7 +99,7 @@ namespace Inventory.DataModel.Repositories.Old
             }
         }
 
-        public static IEnumerable<Possession> GetAllStuff()
+        public static List<Possession> GetAllPossessions()
         {
             using (var context = new InventoryContext())
             {
@@ -112,7 +108,7 @@ namespace Inventory.DataModel.Repositories.Old
             }
         }
 
-        public static IEnumerable<Possession> GetStuffByCategory(PossessionCategory sc)
+        public static List<Possession> GetPossessionsByCategory(PossessionCategory sc)
         {
             using (var context = new InventoryContext())
             {
@@ -121,20 +117,21 @@ namespace Inventory.DataModel.Repositories.Old
             }
         }
 
-        public static IEnumerable<Possession> GetStuffAfterDate(DateTime dt, bool ordered = false)
+        public static List<Possession> GetPossessionsAfterDate(DateTime dt, bool ordered = false)
         {
             using (var context = new InventoryContext())
             {
                 context.Database.Log = Console.WriteLine;
-                var stuffs =  context.Possessions.Where(s => s.Acquired > dt);
+                var Possessions =  context.Possessions.Where(s => s.Acquired > dt);
                 if (ordered)
                 {
-                    stuffs.OrderBy(s => s.Acquired);
+                    Possessions.OrderBy(s => s.Acquired);
                 }
-                return stuffs.ToList();
+                return Possessions.ToList();
             }
         }
-        public static IEnumerable<Possession> GetStuffInUse()
+
+        public static List<Possession> GetPossessionsInUse()
         {
             using (var context = new InventoryContext())
             {
@@ -142,7 +139,8 @@ namespace Inventory.DataModel.Repositories.Old
                 return context.Possessions.Where(s => s.InUse).ToList();
             }
         }
-        public static IEnumerable<Possession> GetStuffInInstallation(Possession installation)
+
+        public static List<Possession> GetPossessionsInInstallation(Possession installation)
         {
             using (var context = new InventoryContext())
             {
@@ -151,15 +149,15 @@ namespace Inventory.DataModel.Repositories.Old
             }
         }
 
-        public static bool GiveStuffToOwner(Possession stuff, Owner owner)
+        public static bool GivePossessionToOwner(Possession possession, Owner owner)
         {
-            if (stuff.PartOf != null)
+            if (possession.PartOf != null)
                 return false;
 
             using (var context = new InventoryContext())
             {
                 List<Possession> things = context.Possessions
-                                            .Where(s => s.PartOf != null && s.PartOf.Id == stuff.Id)
+                                            .Where(s => s.PartOf != null && s.PartOf.Id == possession.Id)
                                             .ToList();
 
                 context.Database.Log = Console.WriteLine;
@@ -173,42 +171,42 @@ namespace Inventory.DataModel.Repositories.Old
             return true;
         }
         
-        public static bool UnclaimStuff(Possession stuff, Owner owner)
+        public static bool UnclaimPossession(Possession possession, Owner owner)
         {
-            stuff.Owner = null;
-            return UpdateStuff(stuff);
+            possession.Owner = null;
+            return UpdatePossession(possession);
         }
 
-        public static bool InstallStuff(Possession stuff, Possession installedIn)
+        public static bool InstallPossession(Possession possession, Possession installedIn)
         {
             using (var context = new InventoryContext())
             {
                 context.Database.Log = Console.WriteLine;
-                context.Possessions.Attach(stuff);
+                context.Possessions.Attach(possession);
                 context.Possessions.Attach(installedIn);
-                stuff.PartOf = installedIn;
+                possession.PartOf = installedIn;
                 return context.SaveChanges() != 0;
             }
         }
 
-        public static bool RemoveStuffFromInstallation(Possession stuff)
+        public static bool RemovePossessionFromInstallation(Possession possession)
         {
-            if (stuff.PartOf == null)
+            if (possession.PartOf == null)
                 return false;
             using (var context = new InventoryContext())
             {
                 context.Database.Log = Console.WriteLine;
-                context.Possessions.Attach(stuff);
-                stuff.PartOf = null;
+                context.Possessions.Attach(possession);
+                possession.PartOf = null;
                 return context.SaveChanges() != 0;
             }
         }
 
-        public static bool AddStuffToInstallation(IEnumerable<Possession> stuff, Possession installation)
+        public static bool AddPossessionToInstallation(IEnumerable<Possession> possession, Possession installation)
         {
-            foreach(var s in stuff)
+            foreach(var s in possession)
             {
-                bool success = InstallStuff(s, installation);
+                bool success = InstallPossession(s, installation);
                 if (!success)
                 {
                     return false;

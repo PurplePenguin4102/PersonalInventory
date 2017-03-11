@@ -12,6 +12,6 @@ namespace Inventory.Classes
         public int Id { get; set; }
         public Rooms Room { get; set; }
         public StorageType TypeOfStorage { get; set; }
-        public virtual List<Stuff> StuffStored { get; set; }
+        public virtual List<Possession> StuffStored { get; set; }
     }
 }

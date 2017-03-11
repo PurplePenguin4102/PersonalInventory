@@ -25,7 +25,7 @@ namespace Inventory.ConsoleUI
             return options;
         } 
 
-        public static List<Option> OptionsFromStuffs(List<Stuff> sList)
+        public static List<Option> OptionsFromPossessions(List<Possession> sList)
         {
             List<Option> options = sList.Select(o => new Option
                 {

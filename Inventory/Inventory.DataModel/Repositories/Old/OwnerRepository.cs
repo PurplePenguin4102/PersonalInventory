@@ -90,21 +90,21 @@ namespace Inventory.DataModel.Repositories.Old
             return FilteredOwners;
         }
 
-        public static IEnumerable<Stuff> GetOwnersStuff(Owner owner)
+        public static IEnumerable<Possession> GetOwnersStuff(Owner owner)
         {
             using (var context = new InventoryContext())
             {
                 context.Database.Log = Console.WriteLine;
-                return context.Inventory.Include(s => s.Owner).Where(s => s.Owner.Id == owner.Id).ToList();
+                return context.Possessions.Include(s => s.Owner).Where(s => s.Owner.Id == owner.Id).ToList();
             }
         }
 
-        public static IEnumerable<Stuff> GetOwnersStuffByType(OwnerTypes type)
+        public static IEnumerable<Possession> GetOwnersStuffByType(OwnerTypes type)
         {
             using (var context = new InventoryContext())
             {
                 context.Database.Log = Console.WriteLine;
-                return context.Inventory
+                return context.Possessions
                     .Include(s => s.Owner)
                     .Where(s => s.Owner.Type == type)
                     .ToList();
@@ -131,7 +131,7 @@ namespace Inventory.DataModel.Repositories.Old
             {
                 Context.Database.Log = Console.WriteLine;
                 Context.Owners.Attach(owner);
-                var stuffOwned = Context.Inventory.Where(s => s.Owner.Id == owner.Id).ToList();
+                var stuffOwned = Context.Possessions.Where(s => s.Owner.Id == owner.Id).ToList();
                 foreach(var s in stuffOwned)
                 {
                     s.Owner = null;

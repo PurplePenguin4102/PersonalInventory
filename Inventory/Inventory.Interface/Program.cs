@@ -66,14 +66,14 @@ namespace Inventory.ConsoleUI
                 case 5: OwnerConsoleUI.UpdateOwner(OwnerTypes.Human); break;
                 case 6: OwnerConsoleUI.UpdateOwner(OwnerTypes.Cat);    break;
                 case 7: OwnerConsoleUI.DeleteOwner();  break;
-                case 8: StuffConsoleUI.SeeAllStuff(); break;
-                case 9: StuffConsoleUI.SeeAllStuffByOwner(); break;
-                case 10: StuffConsoleUI.SeeAllStuffByOwnerType(); break;
-                case 11: StuffConsoleUI.ChangeOwners(); break;
-                case 12: StuffConsoleUI.InstallUninstallStuff(); break;
-                case 13: StuffConsoleUI.UpdateStuff(); break;
-                case 14: StuffConsoleUI.DeleteStuff(); break;
-                case 15: StuffConsoleUI.AddStuff(); break;
+                case 8: PossessionConsoleUI.SeeAllStuff(); break;
+                case 9: PossessionConsoleUI.SeeAllStuffByOwner(); break;
+                case 10: PossessionConsoleUI.SeeAllStuffByOwnerType(); break;
+                case 11: PossessionConsoleUI.ChangeOwners(); break;
+                case 12: PossessionConsoleUI.InstallUninstallStuff(); break;
+                case 13: PossessionConsoleUI.UpdateStuff(); break;
+                case 14: PossessionConsoleUI.DeleteStuff(); break;
+                case 15: PossessionConsoleUI.AddStuff(); break;
                 default: throw new ArgumentException();
             }
             Console.WriteLine("============================");

@@ -54,12 +54,12 @@
     <Compile Include="Enums\OwnerTypes.cs" />
     <Compile Include="Enums\Rooms.cs" />
     <Compile Include="Enums\StorageType.cs" />
-    <Compile Include="Enums\StuffCategory.cs" />
+    <Compile Include="Enums\PossessionCategory.cs" />
     <Compile Include="History.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="Owner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Stuff.cs" />
+    <Compile Include="Possession.cs" />
     <Compile Include="Task.cs" />
   </ItemGroup>
   <ItemGroup>
