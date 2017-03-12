@@ -54,7 +54,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Option.cs" />
     <Compile Include="OwnerConsoleUI.cs" />
     <Compile Include="Owners.cs" />
     <Compile Include="Program.cs" />

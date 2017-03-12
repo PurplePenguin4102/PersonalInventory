@@ -21,10 +21,9 @@ namespace Inventory.ConsoleUI
 
         public void DeleteOwner()
         {
-            Owners owners = ownerDB.GetAllOwners().ToList();
+            Owners owners = ownerDB.GetAllOwners();
             Console.WriteLine(owners.ToString());
-            List<Option> UIList = Option.OptionsFromOwners(owners);
-            Owner toBeKilled = TextParser.SelectItemFromList("Who is to be deleted? : ", UIList).Data as Owner;
+            Owner toBeKilled = TextParser.SelectItemFromList<Owner>("Who is to be deleted? : ", owners);
             bool success = ownerDB.DestroyOwner(toBeKilled);
             string msg = success ? "Update successful" : "Update failed";
             Console.WriteLine(msg);

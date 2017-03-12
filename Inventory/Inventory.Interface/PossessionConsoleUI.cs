@@ -30,9 +30,8 @@ namespace Inventory.ConsoleUI
         public void SeeAllStuffByOwner()
         {
             Owners owners = ownerDB.GetAllOwners().ToList();
-            List<Option> options = Option.OptionsFromOwners(owners);
             Console.WriteLine(owners.ToString());
-            Owner owner = TextParser.SelectItemFromList("Please select an owner : ", options).Data as Owner;
+            Owner owner = TextParser.SelectItemFromList<Owner>("Please select an owner : ", owners);
             Possessions possessions = ownerDB.GetOwnersPossessions(owner).ToList();
             Console.WriteLine(possessions.ToString());
         }
@@ -59,8 +58,8 @@ namespace Inventory.ConsoleUI
             Owners owners = ownerDB.GetAllOwners().ToList(); 
             Console.WriteLine(possessions.ToString());
 
-            Possession thing = TextParser.SelectItemFromList("Please select a possession : ", Option.OptionsFromPossessions(possessions)).Data as Possession;
-            Owner owner = TextParser.SelectItemFromList("Please select a new owner : ", Option.OptionsFromOwners(owners)).Data as Owner;
+            Possession thing = TextParser.SelectItemFromList<Possession>("Please select a possession : ", possessions);
+            Owner owner = TextParser.SelectItemFromList<Owner>("Please select a new owner : ", owners);
 
 
             if (possessionDB.GivePossessionToOwner(thing, owner))
@@ -74,7 +73,7 @@ namespace Inventory.ConsoleUI
         {
             Possessions possessions = possessionDB.GetAllPossessions().ToList();
             Console.WriteLine(possessions.ToString());
-            Possession thing1 = TextParser.SelectItemFromList("Please select an object to install : ", Option.OptionsFromPossessions(possessions)).Data as Possession;
+            Possession thing1 = TextParser.SelectItemFromList<Possession>("Please select an object to install : ", possessions);
             if (thing1.PartOf != null)
             {
                 Console.Write($"Object is installed in {thing1.PartOf.Name}... would you like to uninstall it? (y/n) ");
@@ -90,7 +89,7 @@ namespace Inventory.ConsoleUI
                     return;
                 }
             }
-            Possession thing2 = TextParser.SelectItemFromList($"Please select another object to install {thing1.Name} into : ", Option.OptionsFromPossessions(possessions)).Data as Possession;
+            Possession thing2 = TextParser.SelectItemFromList<Possession>($"Please select another object to install {thing1.Name} into : ", possessions);
 
             possessionDB.InstallPossession(thing1, thing2);
             Console.WriteLine($"Updated {thing1.Name} to be part of {thing2.Name}");

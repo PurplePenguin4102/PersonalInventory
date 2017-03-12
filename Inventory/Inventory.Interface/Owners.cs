@@ -11,16 +11,8 @@ namespace Inventory.ConsoleUI
     {
         public List<Owner> OwnersList { get; set; }
 
-
-        public static implicit operator List<Owner>(Owners p)
-        {
-            return p.OwnersList;
-        }
-
-        public static implicit operator Owners(List<Owner> p)
-        {
-            return new Owners { OwnersList = p };
-        }
+        public static implicit operator List<Owner>(Owners p) => p.OwnersList;
+        public static implicit operator Owners(List<Owner> p) => new Owners { OwnersList = p };
 
         public override string ToString()
         {

@@ -11,15 +11,8 @@ namespace Inventory.ConsoleUI
     {
         public List<Possession> PossessiontList { get; set; }
         
-        public static implicit operator List<Possession>(Possessions p)
-        {
-            return p.PossessiontList;
-        }
-
-        public static implicit operator Possessions(List<Possession> p)
-        {
-            return new Possessions { PossessiontList = p };
-        }
+        public static implicit operator List<Possession>(Possessions p) => p.PossessiontList;
+        public static implicit operator Possessions(List<Possession> p) => new Possessions { PossessiontList = p };
 
         public override string ToString()
         {

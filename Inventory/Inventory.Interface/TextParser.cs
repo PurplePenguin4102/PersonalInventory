@@ -10,7 +10,7 @@ namespace Inventory.ConsoleUI
 {
     public static class TextParser
     {
-        public static Option SelectItemFromList(string msg, List<Option> db) 
+        public static T SelectItemFromList<T>(string msg, List<T> db) 
         {
             string input;
             int id = -1;
@@ -23,9 +23,10 @@ namespace Inventory.ConsoleUI
                     Console.WriteLine("Please enter a valid number");
                 }
             }
-            Option obj = db.FirstOrDefault(g => g.Id == id);
-            return obj;
+            return db.FirstOrDefault(g => FuckYouStaticTyping(g, id));
         }
+
+        private static bool FuckYouStaticTyping(dynamic g, int id) => g.Id == id;
 
         internal static int MakeSelection(Type type)
         {
