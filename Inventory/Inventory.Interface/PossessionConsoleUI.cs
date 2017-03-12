@@ -29,11 +29,11 @@ namespace Inventory.ConsoleUI
 
         public void SeeAllStuffByOwner()
         {
-            List<Owner> owners = ownerDB.GetAllOwners().ToList();
+            Owners owners = ownerDB.GetAllOwners().ToList();
             List<Option> options = Option.OptionsFromOwners(owners);
             Console.WriteLine(owners.ToString());
             Owner owner = TextParser.SelectItemFromList("Please select an owner : ", options).Data as Owner;
-            List<Possession> possessions = ownerDB.GetOwnersPossessions(owner).ToList();
+            Possessions possessions = ownerDB.GetOwnersPossessions(owner).ToList();
             Console.WriteLine(possessions.ToString());
         }
 
@@ -48,15 +48,15 @@ namespace Inventory.ConsoleUI
             }
             else return;
 
-            List<Possession> possessions = ownerDB.GetPossessionsByOwnerType(type).ToList();
+            Possessions possessions = ownerDB.GetPossessionsByOwnerType(type).ToList();
             Console.WriteLine(possessions.ToString());
 
         }
 
         public void ChangeOwners()
         {
-            List<Possession> possessions = possessionDB.GetAllPossessions().ToList();
-            List<Owner> owners = ownerDB.GetAllOwners().ToList(); 
+            Possessions possessions = possessionDB.GetAllPossessions().ToList();
+            Owners owners = ownerDB.GetAllOwners().ToList(); 
             Console.WriteLine(possessions.ToString());
 
             Possession thing = TextParser.SelectItemFromList("Please select a possession : ", Option.OptionsFromPossessions(possessions)).Data as Possession;
@@ -72,7 +72,7 @@ namespace Inventory.ConsoleUI
 
         public void InstallUninstallStuff()
         {
-            List<Possession> possessions = possessionDB.GetAllPossessions().ToList();
+            Possessions possessions = possessionDB.GetAllPossessions().ToList();
             Console.WriteLine(possessions.ToString());
             Possession thing1 = TextParser.SelectItemFromList("Please select an object to install : ", Option.OptionsFromPossessions(possessions)).Data as Possession;
             if (thing1.PartOf != null)

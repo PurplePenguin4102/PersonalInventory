@@ -174,15 +174,14 @@ namespace Inventory.DataModel.Repositories
             using (InventoryContext Context = new InventoryContext())
             {
                 Context.Database.Log = Console.WriteLine;
-                Context.Owners.Attach(owner);
+                var inDB = Context.Owners.Find(owner.Id);
                 var stuffOwned = Context.Possessions.Where(s => s.Owner.Id == owner.Id).ToList();
                 foreach(var s in stuffOwned)
                 {
                     s.Owner = null;
-                    
                 }
                 Context.SaveChanges();
-                Context.Entry(owner).State = EntityState.Deleted;
+                Context.Entry(inDB).State = EntityState.Deleted;
                 return Context.SaveChanges() != 0;
             }
         }

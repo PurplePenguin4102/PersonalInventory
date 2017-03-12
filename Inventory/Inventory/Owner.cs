@@ -21,6 +21,28 @@ namespace Inventory.Classes
             return $"{Id}\t{FirstName}\t{LastName, 15}\t\t{Birthday.ToShortDateString()}\t{Gender.ToString()}\t{Type.ToString()}";
         }
 
+        public override bool Equals(object obj)
+        {
+            Owner owner = obj as Owner;
+            if (owner == null)
+                return base.Equals(obj);
+
+            return this.FirstName == owner.FirstName &&
+                this.LastName == owner.LastName &&
+                this.Birthday == owner.Birthday &&
+                this.Gender == owner.Gender &&
+                this.Type == owner.Type;
+        }
+
+        public override int GetHashCode()
+        {
+            return FirstName.GetHashCode() 
+                + LastName.GetHashCode() 
+                + Birthday.GetHashCode()
+                + Gender.GetHashCode()
+                + Type.GetHashCode();
+        }
+
         public void ApplyUpdate(Owner updated)
         {
             if (updated.FirstName != FirstName)

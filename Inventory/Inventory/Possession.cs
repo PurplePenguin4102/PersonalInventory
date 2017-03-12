@@ -18,6 +18,48 @@ namespace Inventory.Classes
         public string SubCategory { get; set; }
         public bool InUse { get; set; }
         public Possession PartOf { get; set; }
+        //public virtual List<Stuff> Contents { get; set; }
+        //public virtual List<Task> RequiredFor { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            var possession = obj as Possession;
+
+            if (possession == null)
+                return base.Equals(obj);
+
+            bool ownersEqual;
+            if (Owner != null)
+                ownersEqual = Owner.Equals(possession.Owner);
+            else 
+                ownersEqual = possession.Owner == null;
+
+            bool possessionsEqual;
+            if (PartOf != null)
+                possessionsEqual = PartOf.Equals(possession.PartOf);
+            else
+                possessionsEqual = possession.PartOf == null;
+
+            return this.Name == possession.Name &&
+                this.Acquired == possession.Acquired &&
+                this.Category == possession.Category &&
+                this.SubCategory == possession.SubCategory &&
+                this.InUse == possession.InUse &&
+                ownersEqual && possessionsEqual;
+        }
+
+        public override int GetHashCode()
+        {
+            int ownerHashCode = (Owner != null) ? Owner.GetHashCode() : 0;
+            int partOfHashCode = (PartOf != null) ? PartOf.GetHashCode() : 0;
+            return Name.GetHashCode()
+                + Acquired.GetHashCode()
+                + Category.GetHashCode()
+                + SubCategory.GetHashCode()
+                + InUse.GetHashCode()
+                + ownerHashCode
+                + partOfHashCode;
+        }
 
         public override string ToString()
         {
@@ -38,12 +80,22 @@ namespace Inventory.Classes
                 sb.Append($"\r\nOwner\r\n{Owner}");
             return sb.ToString();
         }
-        //public virtual List<Stuff> Contents { get; set; }
-        //public virtual List<Task> RequiredFor { get; set; }
+
         private enum ToStringOptions
         {
             NoPartof = 0x01,
             NoOwner = 0x02,
+        }
+
+        public void ApplyUpdate(Possession updated)
+        {
+            Name = updated.Name;
+            this.Owner = updated.Owner;
+            this.InUse = updated.InUse;
+            this.PartOf = updated.PartOf;
+            this.SubCategory = updated.SubCategory;
+            this.Category = updated.Category;
+            this.Acquired = updated.Acquired;
         }
     }
 

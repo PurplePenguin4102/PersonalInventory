@@ -79,6 +79,7 @@
     <Compile Include="Repositories\OwnerRepository.cs" />
     <Compile Include="Repositories\PossessionRepository.cs" />
     <Compile Include="RulesValidation\OwnerRules.cs" />
+    <Compile Include="RulesValidation\PossessionRules.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
