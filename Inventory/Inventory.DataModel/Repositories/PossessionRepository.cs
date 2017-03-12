@@ -22,30 +22,12 @@ namespace Inventory.DataModel.Repositories
                 context.Database.Log = Console.WriteLine;
 
                 if (possession.Owner != null)
-                    possession.Owner = PutOwnerInContext(possession, context);
+                    possession.Owner = context.Owners.Find(possession.Owner.Id);
                 if (possession.PartOf != null)
-                    possession.PartOf = PutPartOfInContext(possession, context);
+                    possession.PartOf = context.Possessions.Find(possession.PartOf.Id);
                 context.Possessions.Add(possession);
                 return context.SaveChanges() != 0;
             }
-        }
-
-        private static Possession PutPartOfInContext(Possession possession, InventoryContext context)
-        {
-            Possession installedIn = context.Possessions.Find(possession.PartOf.Id);
-            if (possession.PartOf.Equals(installedIn))
-                return installedIn;
-            else
-                return null;
-        }
-
-        private static Owner PutOwnerInContext(Possession possession, InventoryContext context)
-        {
-            Owner owner = context.Owners.Find(possession.Owner.Id);
-            if (possession.Owner.Equals(owner))
-                return owner;
-            else
-                return null;
         }
 
         public bool IsTableEmpty()
@@ -59,19 +41,19 @@ namespace Inventory.DataModel.Repositories
         /// <summary>
         /// Inserts all the possessions given in a list
         /// </summary>
-        public bool CreateLotsOfPossession(Possession[] possession)
+        public bool CreateLotsOfPossession(Possession[] possessions)
         {
             using (var context = new InventoryContext())
             {
                 context.Database.Log = Console.WriteLine;
-                foreach (Possession p in possession)
+                foreach (Possession p in possessions)
                 {
                     if (p.Owner != null)
-                        p.Owner = PutOwnerInContext(p, context);
+                        p.Owner = context.Owners.Find(p.Owner.Id);
                     if (p.PartOf != null)
-                        p.PartOf = PutPartOfInContext(p, context);
+                        p.PartOf = context.Possessions.Find(p.PartOf.Id);
                 }
-                context.Possessions.AddRange(possession);
+                context.Possessions.AddRange(possessions);
                 return context.SaveChanges() != 0;
             }
         }
