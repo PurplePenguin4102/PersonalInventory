@@ -13,7 +13,7 @@ namespace Inventory.DataModel.Repositories
     public class PossessionRepository : IDisposable
     {
 
-        InventoryContext _DB;
+        private InventoryContext _DB;
 
         public PossessionRepository(InventoryContext DB)
         {

@@ -12,27 +12,27 @@ namespace Inventory.ConsoleUI
 {
     public class PossessionConsoleUI
     {
-        private PossessionRepository possessionDB;
-        private OwnerRepository ownerDB;
+        private readonly PossessionRepository possession_DB;
+        private readonly OwnerRepository owner_DB;
 
-        public PossessionConsoleUI()
+        public PossessionConsoleUI(PossessionRepository possessions, OwnerRepository owners)
         {
-            possessionDB = new PossessionRepository();
-            ownerDB = new OwnerRepository();
+            possession_DB = possessions;
+            owner_DB = owners;
         }
 
         public void SeeAllStuff()
         {
-            Possessions possessions = possessionDB.GetAllPossessions().ToList();
+            Possessions possessions = possession_DB.GetAllPossessions();
             Console.WriteLine(possessions.ToString());
         }
 
         public void SeeAllStuffByOwner()
         {
-            Owners owners = ownerDB.GetAllOwners().ToList();
+            Owners owners = owner_DB.GetAllOwners();
             Console.WriteLine(owners.ToString());
             Owner owner = TextParser.SelectItemFromList<Owner>("Please select an owner : ", owners);
-            Possessions possessions = ownerDB.GetOwnersPossessions(owner).ToList();
+            Possessions possessions = owner_DB.GetOwnersPossessions(owner).ToList();
             Console.WriteLine(possessions.ToString());
         }
 
@@ -47,22 +47,22 @@ namespace Inventory.ConsoleUI
             }
             else return;
 
-            Possessions possessions = ownerDB.GetPossessionsByOwnerType(type).ToList();
+            Possessions possessions = owner_DB.GetPossessionsByOwnerType(type).ToList();
             Console.WriteLine(possessions.ToString());
 
         }
 
         public void ChangeOwners()
         {
-            Possessions possessions = possessionDB.GetAllPossessions().ToList();
-            Owners owners = ownerDB.GetAllOwners().ToList(); 
+            Possessions possessions = possession_DB.GetAllPossessions().ToList();
+            Owners owners = owner_DB.GetAllOwners().ToList(); 
             Console.WriteLine(possessions.ToString());
 
             Possession thing = TextParser.SelectItemFromList<Possession>("Please select a possession : ", possessions);
             Owner owner = TextParser.SelectItemFromList<Owner>("Please select a new owner : ", owners);
 
 
-            if (possessionDB.GivePossessionToOwner(thing, owner))
+            if (possession_DB.GivePossessionToOwner(thing, owner))
                 Console.WriteLine(thing);
             else
                 Console.WriteLine("I can't do that, it belongs to an installation");
@@ -71,7 +71,7 @@ namespace Inventory.ConsoleUI
 
         public void InstallUninstallStuff()
         {
-            Possessions possessions = possessionDB.GetAllPossessions().ToList();
+            Possessions possessions = possession_DB.GetAllPossessions().ToList();
             Console.WriteLine(possessions.ToString());
             Possession thing1 = TextParser.SelectItemFromList<Possession>("Please select an object to install : ", possessions);
             if (thing1.PartOf != null)
@@ -80,7 +80,7 @@ namespace Inventory.ConsoleUI
                 string yn = Console.ReadLine();
                 if (yn == "y")
                 {
-                    possessionDB.RemovePossessionFromInstallation(thing1);
+                    possession_DB.RemovePossessionFromInstallation(thing1);
                 }
                 Console.Write("Would you like to install it into something else? (y/n) ");
                 yn = Console.ReadLine();
@@ -91,7 +91,7 @@ namespace Inventory.ConsoleUI
             }
             Possession thing2 = TextParser.SelectItemFromList<Possession>($"Please select another object to install {thing1.Name} into : ", possessions);
 
-            possessionDB.InstallPossession(thing1, thing2);
+            possession_DB.InstallPossession(thing1, thing2);
             Console.WriteLine($"Updated {thing1.Name} to be part of {thing2.Name}");
             Console.WriteLine(thing1);
             Console.WriteLine(thing2);
