@@ -18,7 +18,7 @@ namespace Inventory.DataModel.Repositories
         public PossessionRepository(InventoryContext DB)
         {
             _DB = DB;
-            _DB.Database.Log = Console.WriteLine;
+            //_DB.Database.Log = Console.WriteLine;
         }
 
         /// <summary>

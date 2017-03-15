@@ -11,8 +11,8 @@ namespace RepositoryTests
         {
             Id = 1,
             Name = "Chair",
-            Acquired = DateTime.Now,
-            Owner = new Owner(),
+            Acquired = new DateTime(2013,1,4),
+            //Owner = new Owner(),
             Category = Inventory.Classes.Enums.PossessionCategory.Books,
             SubCategory = "Book chair :P"
         };
@@ -20,8 +20,8 @@ namespace RepositoryTests
         {
             Id = 4,
             Name = "Chair",
-            Acquired = DateTime.Now,
-            Owner = new Owner(),
+            Acquired = new DateTime(2013,1,4),
+            //Owner = new Owner(),
             Category = Inventory.Classes.Enums.PossessionCategory.Books,
             SubCategory = "Book chair :P"
         };

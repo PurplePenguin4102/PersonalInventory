@@ -50,15 +50,14 @@ namespace Inventory.Classes
 
         public override int GetHashCode()
         {
-            int ownerHashCode = (Owner != null) ? Owner.GetHashCode() : 0;
-            int partOfHashCode = (PartOf != null) ? PartOf.GetHashCode() : 0;
-            return Name.GetHashCode()
-                + Acquired.GetHashCode()
-                + Category.GetHashCode()
-                + SubCategory.GetHashCode()
-                + InUse.GetHashCode()
-                + ownerHashCode
-                + partOfHashCode;
+            var hash = Name == null ? 0 : Name.GetHashCode();
+            hash += Acquired.GetHashCode();
+            hash += Category.GetHashCode();
+            hash += SubCategory == null ? 0 : SubCategory.GetHashCode();
+            hash += InUse.GetHashCode();
+            hash += Owner == null ? 0 : Owner.GetHashCode();
+            hash += PartOf == null ? 0 : PartOf.GetHashCode();
+            return hash;
         }
 
         public override string ToString()

@@ -36,11 +36,12 @@ namespace Inventory.Classes
 
         public override int GetHashCode()
         {
-            return FirstName.GetHashCode() 
-                + LastName.GetHashCode() 
-                + Birthday.GetHashCode()
-                + Gender.GetHashCode()
-                + Type.GetHashCode();
+            var hash = FirstName == null ? 0 : FirstName.GetHashCode();
+            hash += LastName == null ? 0 : LastName.GetHashCode();
+            hash += Birthday.GetHashCode();
+            hash += Gender.GetHashCode();
+            hash += Type.GetHashCode();
+            return hash;
         }
 
         public void ApplyUpdate(Owner updated)

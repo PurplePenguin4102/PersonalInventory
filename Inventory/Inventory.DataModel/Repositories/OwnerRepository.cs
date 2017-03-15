@@ -17,7 +17,7 @@ namespace Inventory.DataModel.Repositories
         public OwnerRepository(InventoryContext DB)
         {
             _DB = DB;
-            _DB.Database.Log = Console.WriteLine;
+            //_DB.Database.Log = Console.WriteLine;
         }
 
         /// <summary>
@@ -26,8 +26,12 @@ namespace Inventory.DataModel.Repositories
         public bool CreateOwner(Owner newOwner)
         {
             if (OwnerRules.VerifyInsert(newOwner))
+            {
                 _DB.Owners.Add(newOwner);
-            return _DB.SaveChanges() != 0;
+                return _DB.SaveChanges() != 0;
+            }
+            else
+                return false;
         }
 
         /// <summary>
@@ -36,8 +40,12 @@ namespace Inventory.DataModel.Repositories
         public bool CreateOwners(IEnumerable<Owner> newOwners)
         {
             if (newOwners.All(o => OwnerRules.VerifyInsert(o)))
+            {
                 _DB.Owners.AddRange(newOwners);
-            return _DB.SaveChanges() != 0;
+                return _DB.SaveChanges() != 0;
+            }
+            else
+                return false;
         }
 
         /// <summary>
@@ -106,7 +114,6 @@ namespace Inventory.DataModel.Repositories
         /// </summary>
         public List<Possession> GetPossessionsByOwnerType(OwnerTypes type)
         {
-            _DB.Database.Log = Console.WriteLine;
             return
                 (from possessions in _DB.Possessions
                  where possessions.Owner.Type == type
@@ -129,14 +136,13 @@ namespace Inventory.DataModel.Repositories
         /// </summary>
         public bool DestroyOwner(Owner owner)
         {
-            var inDB = _DB.Owners.Find(owner.Id);
             var stuffOwned = _DB.Possessions.Where(s => s.Owner.Id == owner.Id).ToList();
             foreach(var s in stuffOwned)
             {
                 s.Owner = null;
             }
             _DB.SaveChanges();
-            _DB.Entry(inDB).State = EntityState.Deleted;
+            _DB.Entry(owner).State = EntityState.Deleted;
             return _DB.SaveChanges() != 0;
         }
 
