@@ -10,32 +10,33 @@ using Inventory.DataModel.RulesValidation;
 
 namespace Inventory.DataModel.Repositories
 {
-    public class PossessionRepository
+    public class PossessionRepository : IDisposable
     {
+
+        InventoryContext _DB;
+
+        public PossessionRepository(InventoryContext DB)
+        {
+            _DB = DB;
+            _DB.Database.Log = Console.WriteLine;
+        }
+
         /// <summary>
         /// insert method for a single possession
         /// </summary>
         public bool CreatePossession(Possession possession)
         {
-            using (var context = new InventoryContext())
-            {
-                context.Database.Log = Console.WriteLine;
-
-                if (possession.Owner != null)
-                    possession.Owner = context.Owners.Find(possession.Owner.Id);
-                if (possession.PartOf != null)
-                    possession.PartOf = context.Possessions.Find(possession.PartOf.Id);
-                context.Possessions.Add(possession);
-                return context.SaveChanges() != 0;
-            }
+            if (possession.Owner != null)
+                possession.Owner = _DB.Owners.Find(possession.Owner.Id);
+            if (possession.PartOf != null)
+                possession.PartOf = _DB.Possessions.Find(possession.PartOf.Id);
+            _DB.Possessions.Add(possession);
+            return _DB.SaveChanges() != 0;
         }
 
         public bool IsTableEmpty()
         {
-            using (InventoryContext Context = new InventoryContext())
-            {
-                return !Context.Possessions.Any();
-            }
+            return !_DB.Possessions.Any();
         }
 
         /// <summary>
@@ -43,19 +44,15 @@ namespace Inventory.DataModel.Repositories
         /// </summary>
         public bool CreateLotsOfPossession(Possession[] possessions)
         {
-            using (var context = new InventoryContext())
+            foreach (Possession p in possessions)
             {
-                context.Database.Log = Console.WriteLine;
-                foreach (Possession p in possessions)
-                {
-                    if (p.Owner != null)
-                        p.Owner = context.Owners.Find(p.Owner.Id);
-                    if (p.PartOf != null)
-                        p.PartOf = context.Possessions.Find(p.PartOf.Id);
-                }
-                context.Possessions.AddRange(possessions);
-                return context.SaveChanges() != 0;
+                if (p.Owner != null)
+                    p.Owner = _DB.Owners.Find(p.Owner.Id);
+                if (p.PartOf != null)
+                    p.PartOf = _DB.Possessions.Find(p.PartOf.Id);
             }
+            _DB.Possessions.AddRange(possessions);
+            return _DB.SaveChanges() != 0;
         }
 
         /// <summary>
@@ -63,16 +60,12 @@ namespace Inventory.DataModel.Repositories
         /// </summary>
         public bool UpdatePossession(Possession updated)
         {
-            using (var context = new InventoryContext())
+            Possession inDB = _DB.Possessions.Find(updated.Id);
+            if (inDB != null && PossessionRules.VerifyUpdate(inDB, updated))
             {
-                context.Database.Log = Console.WriteLine;
-                Possession inDB = context.Possessions.Find(updated.Id);
-                if (inDB != null && PossessionRules.VerifyUpdate(inDB, updated))
-                {
-                    inDB.ApplyUpdate(updated);
-                }
-                return context.SaveChanges() != 0;
+                inDB.ApplyUpdate(updated);
             }
+            return _DB.SaveChanges() != 0;
         }
 
         /// <summary>
@@ -80,103 +73,74 @@ namespace Inventory.DataModel.Repositories
         /// </summary>
         public bool DestroyPossession(Possession usrRequest)
         {
-            using (var context = new InventoryContext())
+            Possession toBeDeleted = _DB.Possessions.Find(usrRequest.Id);
+            if (toBeDeleted == null)
+                return false;
+
+            if (toBeDeleted.Equals(usrRequest))
             {
-                context.Database.Log = Console.WriteLine;
-
-                Possession toBeDeleted = context.Possessions.Find(usrRequest.Id);
-                if (toBeDeleted == null)
-                    return false;
-
-                if (toBeDeleted.Equals(usrRequest))
+                var possessionsInDB = _DB.Possessions.Where(s => s.PartOf.Id == toBeDeleted.Id).ToList();
+                foreach (var thing in possessionsInDB)
                 {
-                    var possessionsInDB = context.Possessions.Where(s => s.PartOf.Id == toBeDeleted.Id).ToList();
-                    foreach (var thing in possessionsInDB)
-                    {
-                        thing.PartOf = null;
-                    }
+                    thing.PartOf = null;
                 }
-                context.SaveChanges();
-                return context.SaveChanges() != 0;
             }
+            _DB.SaveChanges();
+            return _DB.SaveChanges() != 0;
         }
 
         // queries
         /// <summary>
-        /// 
+        /// Does what it says on the box
         /// </summary>
         public Possession GetPossessionById(int id)
         {
-            using (var context = new InventoryContext())
-            {
-                context.Database.Log = Console.WriteLine;
-                return context.Possessions.Find(id);
-            }
+            return _DB.Possessions.Find(id);
         }
 
         /// <summary>
-        /// 
+        /// Does what it says on the box
         /// </summary>
         public List<Possession> GetAllPossessions()
         {
-            using (var context = new InventoryContext())
-            {
-                context.Database.Log = Console.WriteLine;
-                return context.Possessions.Include(s => s.Owner).Include(s => s.PartOf).ToList();
-            }
+            return _DB.Possessions.Include(s => s.Owner).Include(s => s.PartOf).ToList();
         }
 
         /// <summary>
-        /// 
+        /// Does what it says on the box
         /// </summary>
         public List<Possession> GetPossessionsByCategory(PossessionCategory sc)
         {
-            using (var context = new InventoryContext())
-            {
-                context.Database.Log = Console.WriteLine;
-                return context.Possessions.Where(s => s.Category == sc).ToList();
-            }
+            return _DB.Possessions.Where(s => s.Category == sc).ToList();
         }
 
         /// <summary>
-        /// 
+        /// Does what it says on the box
         /// </summary>
         public List<Possession> GetPossessionsAfterDate(DateTime dt, bool ordered = false)
         {
-            using (var context = new InventoryContext())
+            var Possessions =  _DB.Possessions.Where(s => s.Acquired > dt);
+            if (ordered)
             {
-                context.Database.Log = Console.WriteLine;
-                var Possessions =  context.Possessions.Where(s => s.Acquired > dt);
-                if (ordered)
-                {
-                    Possessions.OrderBy(s => s.Acquired);
-                }
-                return Possessions.ToList();
+                Possessions.OrderBy(s => s.Acquired);
             }
+            return Possessions.ToList();
         }
 
         /// <summary>
-        /// 
+        /// Does what it says on the box
         /// </summary>
         public List<Possession> GetPossessionsInUse()
         {
-            using (var context = new InventoryContext())
-            {
-                context.Database.Log = Console.WriteLine;
-                return context.Possessions.Where(s => s.InUse).ToList();
-            }
+            return _DB.Possessions.Where(s => s.InUse).ToList();
         }
 
         /// <summary>
-        /// 
+        /// Does what it says on the box
         /// </summary>
         public List<Possession> GetPossessionsInInstallation(Possession installation)
         {
-            using (var context = new InventoryContext())
-            {
-                context.Database.Log = Console.WriteLine;
-                return context.Possessions.Where(s => s.PartOf.Id == installation.Id).ToList();
-            }
+            return _DB.Possessions.Where(s => s.PartOf.Id == installation.Id).ToList();
         }
 
         /// <summary>
@@ -187,20 +151,16 @@ namespace Inventory.DataModel.Repositories
             if (possession.PartOf != null)
                 return false;
 
-            using (var context = new InventoryContext())
+            List<Possession> things = _DB.Possessions
+                                        .Where(s => s.Id == possession.Id 
+                                                    || (s.PartOf != null && s.PartOf.Id == possession.Id))
+                                        .ToList();
+            foreach (var thing in things)
             {
-                context.Database.Log = Console.WriteLine;
-                List<Possession> things = context.Possessions
-                                            .Where(s => s.Id == possession.Id 
-                                                     || (s.PartOf != null && s.PartOf.Id == possession.Id))
-                                            .ToList();
-                foreach (var thing in things)
-                {
-                    thing.Owner = owner;
-                }
-
-                context.SaveChanges();
+                thing.Owner = owner;
             }
+
+            _DB.SaveChanges();
             return true;
         }
         
@@ -215,32 +175,25 @@ namespace Inventory.DataModel.Repositories
 
         public bool InstallPossession(Possession possession, Possession installedIn)
         {
-            using (var context = new InventoryContext())
-            {
-                context.Database.Log = Console.WriteLine;
-                var things = context.Possessions.Where(p => p.Id == installedIn.Id || p.Id == possession.Id).ToList();
-                if (things.Count != 2)
-                    return false;
+            var things = _DB.Possessions.Where(p => p.Id == installedIn.Id || p.Id == possession.Id).ToList();
+            if (things.Count != 2)
+                return false;
 
-                if (things[0].Equals(possession))
-                    things[0].PartOf = things[1];
-                else
-                    things[1].PartOf = things[0];
-                return context.SaveChanges() != 0;
-            }
+            if (things[0].Equals(possession))
+                things[0].PartOf = things[1];
+            else
+                things[1].PartOf = things[0];
+            return _DB.SaveChanges() != 0;
         }
 
         public bool RemovePossessionFromInstallation(Possession possession)
         {
             if (possession.PartOf == null)
                 return false;
-            using (var context = new InventoryContext())
-            {
-                context.Database.Log = Console.WriteLine;
-                var inDB = context.Possessions.Find(possession.Id);
-                inDB.PartOf = null;
-                return context.SaveChanges() != 0;
-            }
+            _DB.Database.Log = Console.WriteLine;
+            var inDB = _DB.Possessions.Find(possession.Id);
+            inDB.PartOf = null;
+            return _DB.SaveChanges() != 0;
         }
 
         public bool AddPossessionsToInstallation(IEnumerable<Possession> possessions, Possession installation)
@@ -256,5 +209,9 @@ namespace Inventory.DataModel.Repositories
             return true;
         }
 
+        public void Dispose()
+        {
+            _DB.Dispose();
+        }
     }
 }
