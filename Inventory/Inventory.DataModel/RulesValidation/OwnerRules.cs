@@ -24,9 +24,9 @@ namespace Inventory.DataModel.RulesValidation
             ((owner1, owner2) => owner2.Birthday > new DateTime(1930, 1, 1))
         };
 
-        public static bool VerifyUpdate(Owner dB, Owner updated)
+        public static bool VerifyUpdate(Owner updated)
         {
-            return UpdateRules.All(f => f(dB, updated));
+            return InsertRules.All(f => f(updated));
         }
 
         public static bool VerifyInsert(Owner newGuy)

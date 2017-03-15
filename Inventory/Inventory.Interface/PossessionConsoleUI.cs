@@ -54,8 +54,8 @@ namespace Inventory.ConsoleUI
 
         public void ChangeOwners()
         {
-            Possessions possessions = possession_DB.GetAllPossessions().ToList();
-            Owners owners = owner_DB.GetAllOwners().ToList(); 
+            Possessions possessions = possession_DB.GetAllPossessions();
+            Owners owners = owner_DB.GetAllOwners(); 
             Console.WriteLine(possessions.ToString());
 
             Possession thing = TextParser.SelectItemFromList<Possession>("Please select a possession : ", possessions);

@@ -118,14 +118,10 @@ namespace Inventory.DataModel.Repositories
         /// </summary>
         public bool UpdateOwner(Owner updated)
         {
-            var owner = (from owners in _DB.Owners
-                        where owners.Id == updated.Id
-                        select owners).SingleOrDefault();
-            if (OwnerRules.VerifyUpdate(owner, updated))
-            {
-                owner.ApplyUpdate(updated);
-            }
-            return _DB.SaveChanges() != 0;
+            if (OwnerRules.VerifyUpdate(updated))
+                return _DB.SaveChanges() != 0;
+            else
+                return false;
         }
 
         /// <summary>
@@ -133,7 +129,6 @@ namespace Inventory.DataModel.Repositories
         /// </summary>
         public bool DestroyOwner(Owner owner)
         {
-            _DB.Database.Log = Console.WriteLine;
             var inDB = _DB.Owners.Find(owner.Id);
             var stuffOwned = _DB.Possessions.Where(s => s.Owner.Id == owner.Id).ToList();
             foreach(var s in stuffOwned)
