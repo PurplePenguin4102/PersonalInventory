@@ -72,6 +72,10 @@
       <Project>{e453890a-331f-4495-90d5-54b7733429f3}</Project>
       <Name>Inventory.DataModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Inventory.PCL.Classes\Inventory.PCL.Classes.csproj">
+      <Project>{4e810fa0-1569-42b8-905d-5c61a3f0a154}</Project>
+      <Name>Inventory.PCL.Classes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Inventory\Inventory.Classes.csproj">
       <Project>{44293367-9030-49a8-9fb1-b0023f54621d}</Project>
       <Name>Inventory.Classes</Name>
