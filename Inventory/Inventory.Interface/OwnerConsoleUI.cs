@@ -12,11 +12,11 @@ namespace Inventory.ConsoleUI
 {
     public class OwnerConsoleUI
     {
-        private OwnerRepository ownerDB;
+        private readonly OwnerRepository ownerDB;
 
-        public OwnerConsoleUI()
+        public OwnerConsoleUI(OwnerRepository ownerDB)
         {
-            ownerDB = new OwnerRepository();
+            this.ownerDB = ownerDB;
         }
 
         public void DeleteOwner()

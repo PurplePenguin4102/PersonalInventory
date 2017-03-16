@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InventoryDatabase.cs" />
     <Compile Include="InventoryDBInitializer.cs" />
     <Compile Include="InventoryContext.cs" />
     <Compile Include="Migrations\201702280126175_Adding Owners.cs" />
