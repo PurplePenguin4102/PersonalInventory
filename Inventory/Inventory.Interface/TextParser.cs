@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Inventory.Classes;
+using Inventory.PCL.Classes;
 using Inventory.ConsoleUI.Util;
 
 namespace Inventory.ConsoleUI

@@ -1,5 +1,5 @@
-﻿using Inventory.Classes;
-using Inventory.Classes.Enums;
+﻿using Inventory.PCL.Classes;
+using Inventory.PCL.Classes.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

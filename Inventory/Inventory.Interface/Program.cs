@@ -1,6 +1,6 @@
 ﻿using System;
 using Inventory.DataModel;
-using Inventory.Classes.Enums;
+using Inventory.PCL.Classes.Enums;
 using Inventory.ConsoleUI.Util;
 
 namespace Inventory.ConsoleUI

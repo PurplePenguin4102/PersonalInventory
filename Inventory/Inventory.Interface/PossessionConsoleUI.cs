@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Inventory.DataModel.Repositories;
-using Inventory.Classes;
+using Inventory.PCL.Classes;
 using Inventory.ConsoleUI.Util;
-using Inventory.Classes.Enums;
+using Inventory.PCL.Classes.Enums;
 
 namespace Inventory.ConsoleUI
 {

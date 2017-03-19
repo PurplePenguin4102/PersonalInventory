@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Inventory.Classes;
-using Inventory.Classes.Enums;
+using Inventory.PCL.Classes;
+using Inventory.PCL.Classes.Enums;
 using System.Data.Entity;
 using Inventory.DataModel.RulesValidation;
 
