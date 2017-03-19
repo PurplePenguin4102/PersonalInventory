@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Inventory.Classes.Enums
+namespace Inventory.Core.DataModel
 {
-    public enum Gender
+    public class Class1
     {
-        Male,
-        Female
-        // TODO : extend later
     }
 }

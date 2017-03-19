@@ -23,6 +23,7 @@ namespace Inventory.ConsoleUI
                     Console.WriteLine("Please enter a valid number");
                 }
             }
+           
             return table.FirstOrDefault(g => FuckYouStaticTyping(g, id));
         }
 

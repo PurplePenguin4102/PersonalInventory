@@ -1,8 +1,8 @@
 ﻿<Application
-    x:Class="Inventory.UWPLayer.App"
+    x:Class="Inventory.Core.UILayer.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Inventory.UWPLayer"
+    xmlns:local="using:Inventory.Core.UILayer"
     RequestedTheme="Light">
 
 </Application>
