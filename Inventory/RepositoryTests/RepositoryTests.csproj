@@ -63,6 +63,10 @@
       <Project>{f20db924-b314-4e39-abd1-835a07545e79}</Project>
       <Name>Inventory.ConsoleUI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Inventory.NetStandard.Classes\Inventory.NetStandard.Classes.csproj">
+      <Project>{fbabb55f-db56-416c-bb9b-2270440e65ad}</Project>
+      <Name>Inventory.NetStandard.Classes</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -88,12 +88,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Inventory.PCL.Classes\Inventory.PCL.Classes.csproj">
-      <Project>{4e810fa0-1569-42b8-905d-5c61a3f0a154}</Project>
-      <Name>Inventory.PCL.Classes</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Migrations\201702280126175_Adding Owners.resx">
       <DependentUpon>201702280126175_Adding Owners.cs</DependentUpon>
     </EmbeddedResource>
@@ -110,7 +104,12 @@
       <DependentUpon>201703110408513_refactored stuff into possession.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Inventory.NetStandard.Classes\Inventory.NetStandard.Classes.csproj">
+      <Project>{fbabb55f-db56-416c-bb9b-2270440e65ad}</Project>
+      <Name>Inventory.NetStandard.Classes</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

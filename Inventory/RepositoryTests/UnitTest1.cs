@@ -1,5 +1,5 @@
 ﻿using System;
-using Inventory.Classes;
+using Inventory.PCL.Classes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace RepositoryTests
@@ -13,7 +13,7 @@ namespace RepositoryTests
             Name = "Chair",
             Acquired = new DateTime(2013,1,4),
             //Owner = new Owner(),
-            Category = Inventory.Classes.Enums.PossessionCategory.Books,
+            Category = Inventory.PCL.Classes.Enums.PossessionCategory.Books,
             SubCategory = "Book chair :P"
         };
         Possession p2 = new Possession
@@ -22,7 +22,7 @@ namespace RepositoryTests
             Name = "Chair",
             Acquired = new DateTime(2013,1,4),
             //Owner = new Owner(),
-            Category = Inventory.Classes.Enums.PossessionCategory.Books,
+            Category = Inventory.PCL.Classes.Enums.PossessionCategory.Books,
             SubCategory = "Book chair :P"
         };
 
@@ -32,7 +32,7 @@ namespace RepositoryTests
             Name = "Chair",
             Acquired = DateTime.Now,
             Owner = new Owner(),
-            Category = Inventory.Classes.Enums.PossessionCategory.Books,
+            Category = Inventory.PCL.Classes.Enums.PossessionCategory.Books,
             SubCategory = "Book chair :P"
         };
 
