@@ -14,7 +14,7 @@ namespace Inventory.DataModel
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=blog.db");
+            optionsBuilder.UseSqlite("Data Source=inventory.db");
         }
     }
 }

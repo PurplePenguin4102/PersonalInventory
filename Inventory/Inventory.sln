@@ -10,10 +10,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryTests", "Reposito
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.NetStandard.Classes", "Inventory.NetStandard.Classes\Inventory.NetStandard.Classes.csproj", "{FBABB55F-DB56-416C-BB9B-2270440E65AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Core.UWPLayer", "Inventory.Core.UWPLayer\Inventory.Core.UWPLayer.csproj", "{B046DBBE-736E-47CD-AD4C-E3F6720C435F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Core.DataModel", "Inventory.Core.DataModel\Inventory.Core.DataModel.csproj", "{DB3562F9-DB3D-4582-9E1A-7BA1453273CD}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,42 +86,6 @@ Global
 		{FBABB55F-DB56-416C-BB9B-2270440E65AD}.Release|x64.Build.0 = Release|Any CPU
 		{FBABB55F-DB56-416C-BB9B-2270440E65AD}.Release|x86.ActiveCfg = Release|Any CPU
 		{FBABB55F-DB56-416C-BB9B-2270440E65AD}.Release|x86.Build.0 = Release|Any CPU
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Debug|ARM.ActiveCfg = Debug|ARM
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Debug|ARM.Build.0 = Debug|ARM
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Debug|ARM.Deploy.0 = Debug|ARM
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Debug|x64.ActiveCfg = Debug|x64
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Debug|x64.Build.0 = Debug|x64
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Debug|x64.Deploy.0 = Debug|x64
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Debug|x86.ActiveCfg = Debug|x86
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Debug|x86.Build.0 = Debug|x86
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Debug|x86.Deploy.0 = Debug|x86
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Release|Any CPU.ActiveCfg = Release|x86
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Release|ARM.ActiveCfg = Release|ARM
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Release|ARM.Build.0 = Release|ARM
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Release|ARM.Deploy.0 = Release|ARM
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Release|x64.ActiveCfg = Release|x64
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Release|x64.Build.0 = Release|x64
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Release|x64.Deploy.0 = Release|x64
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Release|x86.ActiveCfg = Release|x86
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Release|x86.Build.0 = Release|x86
-		{B046DBBE-736E-47CD-AD4C-E3F6720C435F}.Release|x86.Deploy.0 = Release|x86
-		{DB3562F9-DB3D-4582-9E1A-7BA1453273CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DB3562F9-DB3D-4582-9E1A-7BA1453273CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DB3562F9-DB3D-4582-9E1A-7BA1453273CD}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{DB3562F9-DB3D-4582-9E1A-7BA1453273CD}.Debug|ARM.Build.0 = Debug|Any CPU
-		{DB3562F9-DB3D-4582-9E1A-7BA1453273CD}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{DB3562F9-DB3D-4582-9E1A-7BA1453273CD}.Debug|x64.Build.0 = Debug|Any CPU
-		{DB3562F9-DB3D-4582-9E1A-7BA1453273CD}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{DB3562F9-DB3D-4582-9E1A-7BA1453273CD}.Debug|x86.Build.0 = Debug|Any CPU
-		{DB3562F9-DB3D-4582-9E1A-7BA1453273CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DB3562F9-DB3D-4582-9E1A-7BA1453273CD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DB3562F9-DB3D-4582-9E1A-7BA1453273CD}.Release|ARM.ActiveCfg = Release|Any CPU
-		{DB3562F9-DB3D-4582-9E1A-7BA1453273CD}.Release|ARM.Build.0 = Release|Any CPU
-		{DB3562F9-DB3D-4582-9E1A-7BA1453273CD}.Release|x64.ActiveCfg = Release|Any CPU
-		{DB3562F9-DB3D-4582-9E1A-7BA1453273CD}.Release|x64.Build.0 = Release|Any CPU
-		{DB3562F9-DB3D-4582-9E1A-7BA1453273CD}.Release|x86.ActiveCfg = Release|Any CPU
-		{DB3562F9-DB3D-4582-9E1A-7BA1453273CD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
